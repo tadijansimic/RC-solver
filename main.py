@@ -143,12 +143,12 @@ def moveRight():
     kocka.f[2] = kocka.d[2]
     kocka.f[5] = kocka.d[5]
     kocka.f[8] = kocka.d[8]
-    kocka.d[2] = kocka.b[0]
+    kocka.d[2] = kocka.b[6]
     kocka.d[5] = kocka.b[3]
-    kocka.d[8] = kocka.b[6]
-    kocka.b[0] = kocka.u[2]
+    kocka.d[8] = kocka.b[0]
+    kocka.b[6] = kocka.u[2]
     kocka.b[3] = kocka.u[5]
-    kocka.b[6] = kocka.u[8]
+    kocka.b[0] = kocka.u[8]
     kocka.u[2] = a
     kocka.u[5] = b
     kocka.u[8] = c
@@ -163,7 +163,10 @@ def moveRight():
     kocka.r[2] = kocka.r[0]
     kocka.r[1] = a
     kocka.r[0] = b
-
+def moveRightPrim():
+    moveRight()
+    moveRight()
+    moveRight()
 
 mainInput()
 inputEdges()
