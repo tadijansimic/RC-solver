@@ -12,27 +12,27 @@ edges = [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0
 def ispisiKocku():
     print("----------------------------------------------------")
     print("Prednja:")
-    for i in range(3):
+    for i in range(0, 9, 3):
         print(kocka.f[i] + " " + kocka.f[i + 1] + " " + kocka.f[i + 2])
     print("----------------------------------------------------")
     print("Desna:")
-    for i in range(3):
+    for i in range(0, 9, 3):
         print(kocka.r[i] + " " + kocka.r[i + 1] + " " + kocka.r[i + 2])
     print("----------------------------------------------------")
     print("Zadnja:")
-    for i in range(3):
+    for i in range(0, 9, 3):
         print(kocka.b[i] + " " + kocka.b[i + 1] + " " + kocka.b[i + 2])
     print("----------------------------------------------------")
     print("Leva:")
-    for i in range(3):
+    for i in range(0, 9, 3):
         print(kocka.l[i] + " " + kocka.l[i + 1] + " " + kocka.l[i + 2])
     print("----------------------------------------------------")
     print("Gornja:")
-    for i in range(3):
+    for i in range(0, 9, 3):
         print(kocka.u[i] + " " + kocka.u[i + 1] + " " + kocka.u[i + 2])
     print("----------------------------------------------------")
     print("Donja:")
-    for i in range(3):
+    for i in range(0, 9, 3):
         print(kocka.d[i] + " " + kocka.d[i + 1] + " " + kocka.d[i + 2])
 def mapiranje(s):
     if s == "W":
@@ -143,15 +143,16 @@ def moveRight():
     kocka.f[2] = kocka.d[2]
     kocka.f[5] = kocka.d[5]
     kocka.f[8] = kocka.d[8]
-    kocka.d[2] = kocka.b[2]
-    kocka.d[5] = kocka.b[5]
-    kocka.d[8] = kocka.b[8]
-    kocka.b[2] = kocka.u[2]
-    kocka.b[5] = kocka.u[5]
-    kocka.b[8] = kocka.u[8]
+    kocka.d[2] = kocka.b[0]
+    kocka.d[5] = kocka.b[3]
+    kocka.d[8] = kocka.b[6]
+    kocka.b[0] = kocka.u[2]
+    kocka.b[3] = kocka.u[5]
+    kocka.b[6] = kocka.u[8]
     kocka.u[2] = a
     kocka.u[5] = b
     kocka.u[8] = c
+    print(a + " " + b + " " + c)
     a = kocka.r[3]
     b = kocka.r[6]
     kocka.r[3] = kocka.r[7]
