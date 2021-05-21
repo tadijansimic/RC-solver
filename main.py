@@ -1,10 +1,10 @@
 class Kocka:
-    r = ["", "", "", "", "", "", "", "", ""]
-    l = ["", "", "", "", "", "", "", "", ""]
-    f = ["", "", "", "", "", "", "", "", ""]
-    b = ["", "", "", "", "", "", "", "", ""]
-    u = ["", "", "", "", "", "", "", "", ""]
-    d = ["", "", "", "", "", "", "", "", ""]
+    f = ["O", "B", "W", "G", "G", "O", "R", "B", "Y"]
+    r = ["G", "R", "G", "W", "O", "B", "O", "Y", "W"]
+    b = ["W", "R", "W", "Y", "B", "W", "B", "R", "R"]
+    l = ["B", "O", "Y", "R", "R", "W", "B", "O", "G"]
+    u = ["O", "G", "O", "G", "Y", "B", "B", "O", "R"]
+    d = ["Y", "W", "G", "Y", "W", "G", "Y", "Y", "R"]
 
 kocka = Kocka
 edges = [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]]
@@ -152,7 +152,6 @@ def moveRight():
     kocka.u[2] = a
     kocka.u[5] = b
     kocka.u[8] = c
-    print(a + " " + b + " " + c)
     a = kocka.r[3]
     b = kocka.r[6]
     kocka.r[3] = kocka.r[7]
@@ -167,8 +166,37 @@ def moveRightPrim():
     moveRight()
     moveRight()
     moveRight()
+def moveLeftPrim():
+    a = kocka.f[0]
+    b = kocka.f[3]
+    c = kocka.f[6]
+    kocka.f[0] = kocka.d[0]
+    kocka.f[3] = kocka.d[3]
+    kocka.f[6] = kocka.d[6]
+    kocka.d[0] = kocka.b[8]
+    kocka.d[3] = kocka.b[5]
+    kocka.d[6] = kocka.b[2]
+    kocka.b[8] = kocka.u[0]
+    kocka.b[5] = kocka.u[3]
+    kocka.b[2] = kocka.u[6]
+    kocka.u[0] = a
+    kocka.u[3] = b
+    kocka.u[6] = c
+    a = kocka.l[3]
+    b = kocka.l[6]
+    kocka.l[3] = kocka.l[1]
+    kocka.l[6] = kocka.l[0]
+    kocka.l[1] = kocka.l[5]
+    kocka.l[0] = kocka.l[2]
+    kocka.l[5] = kocka.l[7]
+    kocka.l[2] = kocka.l[8]
+    kocka.l[7] = a
+    kocka.l[8] = b
+def moveLeft():
+    moveLeftPrim()
+    moveLeftPrim()
+    moveLeftPrim()
 
-mainInput()
 inputEdges()
-moveRight()
+moveLeftPrim()
 ispisiKocku()
