@@ -183,16 +183,16 @@ def moveUp():
     kocka.l[0] = a
     kocka.l[1] = b
     kocka.l[2] = c
-    a = kocka.r[7]
-    b = kocka.r[8]
-    kocka.r[7] = kocka.r[5]
-    kocka.r[8] = kocka.r[2]
-    kocka.r[5] = kocka.r[1]
-    kocka.r[2] = kocka.r[0]
-    kocka.r[1] = kocka.r[3]
-    kocka.r[0] = kocka.r[6]
-    kocka.r[3] = a
-    kocka.r[6] = b
+    a = kocka.u[7]
+    b = kocka.u[8]
+    kocka.u[7] = kocka.u[5]
+    kocka.u[8] = kocka.u[2]
+    kocka.u[5] = kocka.u[1]
+    kocka.u[2] = kocka.u[0]
+    kocka.u[1] = kocka.u[3]
+    kocka.u[0] = kocka.u[6]
+    kocka.u[3] = a
+    kocka.u[6] = b
 def moveUpPrim():
     moveUp()
     moveUp()
