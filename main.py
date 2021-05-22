@@ -1,11 +1,20 @@
-class Kocka:
-    f = ["G", "G", "G", "G", "G", "G", "G", "G", "G"]
-    r = ["O", "O", "O", "O", "O", "O", "O", "O", "O"]
-    b = ["B", "B", "B", "B", "B", "B", "B", "B", "B"]
-    l = ["R", "R", "R", "R", "R", "R", "R", "R", "R"]
-    u = ["Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y"]
-    d = ["W", "W", "W", "W", "W", "W", "W", "W", "W"]
+# class Kocka:
+#     f = ["G", "G", "G", "G", "G", "G", "G", "G", "G"]
+#     r = ["O", "O", "O", "O", "O", "O", "O", "O", "O"]
+#     b = ["B", "B", "B", "B", "B", "B", "B", "B", "B"]
+#     l = ["R", "R", "R", "R", "R", "R", "R", "R", "R"]
+#     u = ["Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y"]
+#     d = ["W", "W", "W", "W", "W", "W", "W", "W", "W"]
 
+algoritmi = {"ubaci ulevo" : ['R2', ""]}
+
+class Kocka:
+    f = ["O", "B", "W", "G", "G", "O", "R", "B", "Y"]
+    r = ["G", "R", "G", "W", "O", "B", "O", "Y", "W"]
+    b = ["W", "R", "W", "Y", "B", "W", "B", "R", "R"]
+    l = ["B", "O", "Y", "R", "R", "W", "B", "O", "G"]
+    u = ["O", "G", "O", "G", "Y", "B", "B", "O", "R"]
+    d = ["Y", "W", "G", "Y", "W", "G", "Y", "Y", "R"]
 
 kocka = Kocka
 edges = [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]]
@@ -163,7 +172,18 @@ def uradiAlgoritam(niz):
             moveBack()
         elif i == "B'":
             moveBackPrim()
-
+        elif i == "R2":
+            R2()
+        elif i == "L2":
+            L2()
+        elif i == "F2":
+            F2()
+        elif i == "B2":
+            B2()
+        elif i == "U2":
+            U2()
+        elif i == "D2":
+            D2()
 def moveRight():
     a = kocka.f[2]
     b = kocka.f[5]
@@ -255,22 +275,21 @@ def moveUpPrim():
     moveUp()
     moveUp()
 def moveFront():
-
     a = kocka.l[2]
     b = kocka.l[5]
     c = kocka.l[8]
     kocka.l[2] = kocka.d[0]
     kocka.l[5] = kocka.d[1]
     kocka.l[8] = kocka.d[2]
-    kocka.d[0] = kocka.b[0]
-    kocka.d[1] = kocka.b[3]
-    kocka.d[2] = kocka.b[6]
-    kocka.b[0] = kocka.u[6]
-    kocka.b[3] = kocka.u[7]
-    kocka.b[6] = kocka.u[8]
-    kocka.u[6] = a
+    kocka.d[0] = kocka.r[6]
+    kocka.d[1] = kocka.r[3]
+    kocka.d[2] = kocka.r[0]
+    kocka.r[6] = kocka.u[8]
+    kocka.r[3] = kocka.u[7]
+    kocka.r[0] = kocka.u[6]
+    kocka.u[6] = c
     kocka.u[7] = b
-    kocka.u[8] = c
+    kocka.u[8] = a
     a = kocka.f[0]
     b = kocka.f[1]
     kocka.f[0] = kocka.f[6]
@@ -281,18 +300,11 @@ def moveFront():
     kocka.f[7] = kocka.f[5]
     kocka.f[2] = a
     kocka.f[5] = b
-
-
-
-
-    moveUp()
-    moveUp()
-    moveUp()
 def moveFrontPrim():
     moveFront()
     moveFront()
     moveFront()
-def moveDownPrim():
+def moveDown():
     a = kocka.f[6]
     b = kocka.f[7]
     c = kocka.f[8]
@@ -318,10 +330,10 @@ def moveDownPrim():
     kocka.d[0] = kocka.d[6]
     kocka.d[3] = a
     kocka.d[6] = b
-def moveDown():
-    moveDownPrim()
-    moveDownPrim()
-    moveDownPrim()
+def moveDownPrim():
+    moveDown()
+    moveDown()
+    moveDown()
 def moveBack():
     a = kocka.u[0]
     b = kocka.u[1]
@@ -352,7 +364,24 @@ def moveBackPrim():
     moveBack()
     moveBack()
     moveBack()
+def R2():
+    moveRight()
+    moveRight()
+def F2():
+    moveFront()
+    moveFront()
+def L2():
+    moveLeft()
+    moveLeft()
+def D2():
+    moveDown()
+    moveDown()
+def F2():
+    moveFront()
+    moveFront()
+def B2():
+    moveBack()
+    moveBack()
 
-
-# uradiAlgoritam(["R", "R"])
+moveFrontPrim()
 ispisiKocku()
