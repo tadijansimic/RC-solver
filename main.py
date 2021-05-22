@@ -136,6 +136,34 @@ def inputEdges():
     #----------------------------
     for i in range(6):
         print(edges[i])
+
+def uradiAlgoritam(niz):
+    for i in niz:
+        if i == "R":
+            moveRight()
+        elif i == "R'":
+            moveRightPrim()
+        elif i == "L":
+            moveLeft()
+        elif i == "L'":
+            moveLeftPrim()
+        elif i == "D":
+            moveDown()
+        elif i == "D'":
+            moveDownPrim()
+        elif i == "U":
+            moveUp()
+        elif i == "U'":
+            moveUpPrim()
+        elif i == "F":
+            moveFront()
+        elif i == "F'":
+            moveFrontPrim()
+        elif i == "B":
+            moveBack()
+        elif i == "B'":
+            moveBackPrim()
+
 def moveRight():
     a = kocka.f[2]
     b = kocka.f[5]
@@ -324,5 +352,7 @@ def moveBackPrim():
     moveBack()
     moveBack()
     moveBack()
-moveBack()
+
+uradiAlgoritam(["R", "R", "D'", "U", "U", "L", "L", "D", "R", "D'", "F'", "D'", "B", "B", "L'", "D'", "B'", "D'", "L'", "F'", "L'", "B'", "L", "D", "D", "L", "R'", "U", "B'", "F'"])
+# uradiAlgoritam(["R", "R"])
 ispisiKocku()
