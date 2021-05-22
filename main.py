@@ -1,22 +1,24 @@
-# class Kocka:
-#     f = ["G", "G", "G", "G", "G", "G", "G", "G", "G"]
-#     r = ["O", "O", "O", "O", "O", "O", "O", "O", "O"]
-#     b = ["B", "B", "B", "B", "B", "B", "B", "B", "B"]
-#     l = ["R", "R", "R", "R", "R", "R", "R", "R", "R"]
-#     u = ["Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y"]
-#     d = ["W", "W", "W", "W", "W", "W", "W", "W", "W"]
-
-algoritmi = {"ubaci ulevo" : ['R2', ""]}
-a = ""
 class Kocka:
-    f = ["O", "B", "W", "G", "G", "O", "R", "B", "Y"]
-    r = ["G", "R", "G", "W", "O", "B", "O", "Y", "W"]
-    b = ["W", "R", "W", "Y", "B", "W", "B", "R", "R"]
-    l = ["B", "O", "Y", "R", "R", "W", "B", "O", "G"]
-    u = ["O", "G", "O", "G", "Y", "B", "B", "O", "R"]
-    d = ["Y", "W", "G", "Y", "W", "G", "Y", "Y", "R"]
+    f = ["G", "G", "G", "G", "G", "G", "G", "G", "G"]
+    r = ["O", "O", "O", "O", "O", "O", "O", "O", "O"]
+    b = ["B", "B", "B", "B", "B", "B", "B", "B", "B"]
+    l = ["R", "R", "R", "R", "R", "R", "R", "R", "R"]
+    u = ["Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y"]
+    d = ["W", "W", "W", "W", "W", "W", "W", "W", "W"]
+
+algoritmi = {"okreniPrednjiEdge" : ["R'", "F", "R", "F'", "U"]}
+scramble = ["R", "U", "F", "D'"]
+
+# class Kocka:
+#     f = ["O", "B", "W", "G", "G", "O", "R", "B", "Y"]
+#     r = ["G", "R", "G", "W", "O", "B", "O", "Y", "W"]
+#     b = ["W", "R", "W", "Y", "B", "W", "B", "R", "R"]
+#     l = ["B", "O", "Y", "R", "R", "W", "B", "O", "G"]
+#     u = ["O", "G", "O", "G", "Y", "B", "B", "O", "R"]
+#     d = ["Y", "W", "G", "Y", "W", "G", "Y", "Y", "R"]
 
 kocka = Kocka
+resenje = []
 edges = [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]]
 def ispisiKocku():
     print("----------------------------------------------------")
@@ -382,6 +384,93 @@ def U2():
 def B2():
     moveBack()
     moveBack()
+def zelenoBeliEdge():
+    inputEdges()
+    a = edges[0][5]
+    if a == -1:
+        resenje.append("F2")
+        F2()
+    elif a == 1:
+        uradiAlgoritam(["U'", "R'", "F", "R"])
+        resenje.append(["U'", "R'", "F", "R"])
+    elif a == -2:
+        moveUp()
+        F2()
+        resenje.append("U", "F2")
+    elif a == 2:
+        uradiAlgoritam(["R'", "F", "R"])
+        resenje.append(["R'", "F", "R"])
+    elif a == -3:
+        U2()
+        F2()
+        resenje.append(["U2", "F2"])
+    elif a == 3:
+        uradiAlgoritam(["U", "R'", "F", "R"])
+        resenje.append(["U", "R'", "F", "R"])
+    elif a == -4:
+        moveUpPrim()
+        F2()
+        resenje.append("U'", "F2")
+    elif a == 4:
+        uradiAlgoritam(["L", "F'", "L'"])
+        resenje.append(["L", "F'", "L'"])
+    elif a == -5:
+        moveFrontPrim()
+        resenje.append("F'")
+    elif a == 5:
+        uradiAlgoritam(["R", "U", "R'", "F2"])
+        resenje.append(["R", "U", "R'", "F2"])
+    elif a == 6:
+        uradiAlgoritam(["R2", "F'"])
+        resenje.append(["R2", "F'"])
+    elif a == -6:
+        uradiAlgoritam(["R", "D'"])
+        resenje.append(["R", "D'"])
+    elif a == 7:
+        uradiAlgoritam(["L", "U'", "F2"])
+        resenje.append(["L", "U'", "F2"])
+    elif a == -7:
+        uradiAlgoritam(["L2", "F'"])
+        resenje.append(["L2", "F'"])
+    elif a == 8:
+        uradiAlgoritam(["F'"])
+        resenje.append(["F'"])
+    elif a == -8:
+        uradiAlgoritam(["L", "D"])
+        resenje.append(["L", "D"])
+    elif a == 9:
+        uradiAlgoritam(["F", "L'", "U'", "F2"])
+        resenje.append(["F", "L'", "U'", "F2"])
+    elif a == -10:
+        uradiAlgoritam(["D'"])
+        resenje.append("D'")
+    elif a == 10:
+        uradiAlgoritam(["R", "F"])
+        resenje.append(["R", "F"])
+    elif a == -11:
+        uradiAlgoritam(["D2"])
+        resenje.append("D2")
+    elif a == 11:
+        uradiAlgoritam(["D'", "R", "F"])
+        resenje.append(["D'", "R", "F"])
+    elif a == -12:
+        uradiAlgoritam(["D"])
+        resenje.append("D")
+    elif a == 12:
+        uradiAlgoritam(["L'", "F'"])
+        resenje.append(["L'", "F'"])
+def daLiJeBeliKrst():
+    if edges[0][0] == 0 and edges[0][2] == -10 and edges[0][3] == -12 and edges[0][4] == -11 and edges[0][5] == -9:
+        return True
+    return False
+def beliKrst():
+    inputEdges()
+    if daLiJeBeliKrst():
+        return
 
-moveFrontPrim()
+
+uradiAlgoritam(scramble)
+zelenoBeliEdge()
+print("RESENJE: ")
+print(resenje)
 ispisiKocku()
