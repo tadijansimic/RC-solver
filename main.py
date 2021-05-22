@@ -353,6 +353,6 @@ def moveBackPrim():
     moveBack()
     moveBack()
 
-uradiAlgoritam(["R", "R", "D'", "U", "U", "L", "L", "D", "R", "D'", "F'", "D'", "B", "B", "L'", "D'", "B'", "D'", "L'", "F'", "L'", "B'", "L", "D", "D", "L", "R'", "U", "B'", "F'"])
+
 # uradiAlgoritam(["R", "R"])
 ispisiKocku()
