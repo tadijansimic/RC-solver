@@ -7,7 +7,7 @@
 #     d = ["W", "W", "W", "W", "W", "W", "W", "W", "W"]
 
 algoritmi = {"ubaci ulevo" : ['R2', ""]}
-
+a = ""
 class Kocka:
     f = ["O", "B", "W", "G", "G", "O", "R", "B", "Y"]
     r = ["G", "R", "G", "W", "O", "B", "O", "Y", "W"]
