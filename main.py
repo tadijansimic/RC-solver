@@ -376,9 +376,9 @@ def L2():
 def D2():
     moveDown()
     moveDown()
-def F2():
-    moveFront()
-    moveFront()
+def U2():
+    moveUp()
+    moveUp()
 def B2():
     moveBack()
     moveBack()
