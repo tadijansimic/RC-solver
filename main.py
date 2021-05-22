@@ -1,14 +1,14 @@
 class Kocka:
-    r = ["", "", "", "", "", "", "", "", ""]
-    l = ["", "", "", "", "", "", "", "", ""]
-    f = ["", "", "", "", "", "", "", "", ""]
-    b = ["", "", "", "", "", "", "", "", ""]
-    u = ["", "", "", "", "", "", "", "", ""]
-    d = ["", "", "", "", "", "", "", "", ""]
+    f = ["G", "G", "G", "G", "G", "G", "G", "G", "G"]
+    r = ["O", "O", "O", "O", "O", "O", "O", "O", "O"]
+    b = ["B", "B", "B", "B", "B", "B", "B", "B", "B"]
+    l = ["R", "R", "R", "R", "R", "R", "R", "R", "R"]
+    u = ["Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y"]
+    d = ["W", "W", "W", "W", "W", "W", "W", "W", "W"]
+
 
 kocka = Kocka
 edges = [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]]
-
 def ispisiKocku():
     print("----------------------------------------------------")
     print("Prednja:")
@@ -152,7 +152,6 @@ def moveRight():
     kocka.u[2] = a
     kocka.u[5] = b
     kocka.u[8] = c
-    print(a + " " + b + " " + c)
     a = kocka.r[3]
     b = kocka.r[6]
     kocka.r[3] = kocka.r[7]
@@ -167,8 +166,135 @@ def moveRightPrim():
     moveRight()
     moveRight()
     moveRight()
+def moveLeftPrim():
+    a = kocka.f[0]
+    b = kocka.f[3]
+    c = kocka.f[6]
+    kocka.f[0] = kocka.d[0]
+    kocka.f[3] = kocka.d[3]
+    kocka.f[6] = kocka.d[6]
+    kocka.d[0] = kocka.b[8]
+    kocka.d[3] = kocka.b[5]
+    kocka.d[6] = kocka.b[2]
+    kocka.b[8] = kocka.u[0]
+    kocka.b[5] = kocka.u[3]
+    kocka.b[2] = kocka.u[6]
+    kocka.u[0] = a
+    kocka.u[3] = b
+    kocka.u[6] = c
+    a = kocka.l[3]
+    b = kocka.l[6]
+    kocka.l[3] = kocka.l[1]
+    kocka.l[6] = kocka.l[0]
+    kocka.l[1] = kocka.l[5]
+    kocka.l[0] = kocka.l[2]
+    kocka.l[5] = kocka.l[7]
+    kocka.l[2] = kocka.l[8]
+    kocka.l[7] = a
+    kocka.l[8] = b
+def moveLeft():
+    moveLeftPrim()
+    moveLeftPrim()
+    moveLeftPrim()
+def moveUp():
+    a = kocka.f[0]
+    b = kocka.f[1]
+    c = kocka.f[2]
+    kocka.f[0] = kocka.r[0]
+    kocka.f[1] = kocka.r[1]
+    kocka.f[2] = kocka.r[2]
+    kocka.r[0] = kocka.b[0]
+    kocka.r[1] = kocka.b[1]
+    kocka.r[2] = kocka.b[2]
+    kocka.b[0] = kocka.l[0]
+    kocka.b[1] = kocka.l[1]
+    kocka.b[2] = kocka.l[2]
+    kocka.l[0] = a
+    kocka.l[1] = b
+    kocka.l[2] = c
+    a = kocka.u[7]
+    b = kocka.u[8]
+    kocka.u[7] = kocka.u[5]
+    kocka.u[8] = kocka.u[2]
+    kocka.u[5] = kocka.u[1]
+    kocka.u[2] = kocka.u[0]
+    kocka.u[1] = kocka.u[3]
+    kocka.u[0] = kocka.u[6]
+    kocka.u[3] = a
+    kocka.u[6] = b
+def moveUpPrim():
+    moveUp()
+    moveUp()
+    moveUp()
+def moveFront():
 
-mainInput()
+    a = kocka.l[2]
+    b = kocka.l[5]
+    c = kocka.l[8]
+    kocka.l[2] = kocka.d[0]
+    kocka.l[5] = kocka.d[1]
+    kocka.l[8] = kocka.d[2]
+    kocka.d[0] = kocka.b[0]
+    kocka.d[1] = kocka.b[3]
+    kocka.d[2] = kocka.b[6]
+    kocka.b[0] = kocka.u[6]
+    kocka.b[3] = kocka.u[7]
+    kocka.b[6] = kocka.u[8]
+    kocka.u[6] = a
+    kocka.u[7] = b
+    kocka.u[8] = c
+    a = kocka.f[0]
+    b = kocka.f[1]
+    kocka.f[0] = kocka.f[6]
+    kocka.f[1] = kocka.f[3]
+    kocka.f[6] = kocka.f[8]
+    kocka.f[3] = kocka.f[7]
+    kocka.f[8] = kocka.f[2]
+    kocka.f[7] = kocka.f[5]
+    kocka.f[2] = a
+    kocka.f[5] = b
+
+
+
+
+    moveUp()
+    moveUp()
+    moveUp()
+def moveFrontPrim():
+    moveFront()
+    moveFront()
+    moveFront()
+def moveDownPrim():
+    a = kocka.f[6]
+    b = kocka.f[7]
+    c = kocka.f[8]
+    kocka.f[6] = kocka.l[6]
+    kocka.f[7] = kocka.l[7]
+    kocka.f[8] = kocka.l[8]
+    kocka.l[6] = kocka.b[6]
+    kocka.l[7] = kocka.b[7]
+    kocka.l[8] = kocka.b[8]
+    kocka.b[6] = kocka.r[6]
+    kocka.b[7] = kocka.r[7]
+    kocka.b[8] = kocka.r[8]
+    kocka.r[6] = a
+    kocka.r[7] = b
+    kocka.r[8] = c
+    a = kocka.d[7]
+    b = kocka.d[8]
+    kocka.d[7] = kocka.d[5]
+    kocka.d[8] = kocka.d[2]
+    kocka.d[5] = kocka.d[1]
+    kocka.d[2] = kocka.d[0]
+    kocka.d[1] = kocka.d[3]
+    kocka.d[0] = kocka.d[6]
+    kocka.d[3] = a
+    kocka.d[6] = b
+def moveDown():
+    moveDownPrim()
+    moveDownPrim()
+    moveDownPrim()
+
 inputEdges()
-moveRight()
-ispisiKocku()
+moveDown()
+ispisiKocku() 
