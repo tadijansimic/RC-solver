@@ -294,7 +294,35 @@ def moveDown():
     moveDownPrim()
     moveDownPrim()
     moveDownPrim()
-
-inputEdges()
-moveDown()
-ispisiKocku() 
+def moveBack():
+    a = kocka.u[0]
+    b = kocka.u[1]
+    c = kocka.u[2]
+    kocka.u[0] = kocka.r[2]
+    kocka.u[1] = kocka.r[5]
+    kocka.u[2] = kocka.r[8]
+    kocka.r[2] = kocka.d[8]
+    kocka.r[5] = kocka.d[7]
+    kocka.r[8] = kocka.d[6]
+    kocka.d[8] = kocka.l[6]
+    kocka.d[7] = kocka.l[3]
+    kocka.d[6] = kocka.l[0]
+    kocka.l[0] = c
+    kocka.l[3] = b
+    kocka.l[6] = a
+    a = kocka.b[1]
+    b = kocka.b[0]
+    kocka.b[0] = kocka.b[6]
+    kocka.b[1] = kocka.b[3]
+    kocka.b[3] = kocka.b[7]
+    kocka.b[6] = kocka.b[8]
+    kocka.b[7] = kocka.b[5]
+    kocka.b[8] = kocka.b[2]
+    kocka.b[2] = b
+    kocka.b[5] = a
+def moveBackPrim():
+    moveBack()
+    moveBack()
+    moveBack()
+moveBack()
+ispisiKocku()
