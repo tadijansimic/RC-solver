@@ -8,7 +8,7 @@ class Kocka:
     u = ["Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y"]
     d = ["W", "W", "W", "W", "W", "W", "W", "W", "W"]
 
-scramble = ["B"]
+scramble = ["R2", "D'", "U2", "L2", "D", "R", "D'", "F'", "D'", "B2", "L'", "D'", "B'", "D'", "L'", "F'", "L'", "B'", "L", "D2", "L", "R'", "U", "B'", "F'"]
 # class Kocka:
 #     f = ["O", "B", "W", "G", "G", "O", "R", "B", "Y"]
 #     r = ["G", "R", "G", "W", "O", "B", "O", "Y", "W"]
@@ -149,7 +149,6 @@ def inputEdges():
     edges[front][up] = 12
     edges[up][front] = -12
     #----------------------------
-
 def moveRight():
     a = kocka.f[2]
     b = kocka.f[5]
@@ -180,8 +179,6 @@ def moveRightPrim():
     moveRight()
     moveRight()
     moveRight()
-#!ok
-
 def moveLeftPrim():
     a = kocka.f[0]
     b = kocka.f[3]
@@ -212,8 +209,6 @@ def moveLeft():
     moveLeftPrim()
     moveLeftPrim()
     moveLeftPrim()
-#!ok
-
 def moveUp():
     a = kocka.f[0]
     b = kocka.f[1]
@@ -244,8 +239,6 @@ def moveUpPrim():
     moveUp()
     moveUp()
     moveUp()
-#!ok
-
 def moveFront():
     a = kocka.l[2]
     b = kocka.l[5]
@@ -276,8 +269,6 @@ def moveFrontPrim():
     moveFront()
     moveFront()
     moveFront()
-#!ok
-
 def moveDown():
     a = kocka.f[6]
     b = kocka.f[7]
@@ -308,8 +299,6 @@ def moveDownPrim():
     moveDown()
     moveDown()
     moveDown()
-#!ok
-
 def moveBack():
     a = kocka.u[0]
     b = kocka.u[1]
@@ -340,7 +329,6 @@ def moveBackPrim():
     moveBack()
     moveBack()
     moveBack()
-
 def R2():
     moveRight()
     moveRight()
@@ -359,7 +347,6 @@ def U2():
 def B2():
     moveBack()
     moveBack()
-
 def uradiAlgoritam(niz):
     for i in niz:
         if i == "R":
@@ -368,7 +355,7 @@ def uradiAlgoritam(niz):
             moveRightPrim()
         elif i == "L":
             moveLeft()
-        elif i == "L`":
+        elif i == "L'":
             moveLeftPrim()
         elif i == "D":
             moveDown()
@@ -483,48 +470,48 @@ def plavoBeliEdge():
         resenje.append(["U2","B2"])
         return
     if(edges[4][0]==-1):
-        uradiAlgoritam(["U","L`","B"])
-        resenje.append(["U","L`","B"])
+        uradiAlgoritam(["U","L'","B"])
+        resenje.append(["U","L'","B"])
         return
     if(edges[4][0]==2):
-        uradiAlgoritam(["U`","B2"])
-        resenje.append(["U`","B2"])
+        uradiAlgoritam(["U'","B2"])
+        resenje.append(["U'","B2"])
         return
     if(edges[4][0]==-2):
-        uradiAlgoritam(["R","B`","R`"])
-        resenje.append(["U","L`","B"])
+        uradiAlgoritam(["R","B'","R'"])
+        resenje.append(["U","L'","B"])
         return
     if(edges[4][0]==3):
         uradiAlgoritam(["B2"])
         resenje.append(["B2"])
         return
     if(edges[4][0]==-3):
-        uradiAlgoritam(["U`","L`","B"])
-        resenje.append(["U`","L`","B"])
+        uradiAlgoritam(["U'","L'","B"])
+        resenje.append(["U'","L'","B"])
         return
     if(edges[4][0]==4):
         uradiAlgoritam(["U","B2"])
         resenje.append(["U","B2"])
         return
     if(edges[4][0]==-4):
-        uradiAlgoritam(["L`","B"])
-        resenje.append(["L`","B"])
+        uradiAlgoritam(["L'","B"])
+        resenje.append(["L'","B"])
         return
     if(edges[4][0]==5):
-        uradiAlgoritam(["R2","B`","R2"])
-        resenje.append(["R2","B`","R2"])
+        uradiAlgoritam(["R2","B'","R2"])
+        resenje.append(["R2","B'","R2"])
         return
     if(edges[4][0]==-5):
-        uradiAlgoritam(["R","U`","B2","R`"])
-        resenje.append(["R","U`","B2","R`"])
+        uradiAlgoritam(["R","U'","B2","R'"])
+        resenje.append(["R","U'","B2","R'"])
         return
     if(edges[4][0]==6):
-        uradiAlgoritam(["R`","U`","R","B2"])
-        resenje.append(["R`","U`","R","B2"])
+        uradiAlgoritam(["R'","U'","R","B2"])
+        resenje.append(["R'","U'","R","B2"])
         return
     if(edges[4][0]==-6):
-        uradiAlgoritam(["B`"])
-        resenje.append(["B`"])
+        uradiAlgoritam(["B'"])
+        resenje.append(["B'"])
         return
     if(edges[4][0]==7):
         uradiAlgoritam(["B"])
@@ -535,20 +522,20 @@ def plavoBeliEdge():
         resenje.append(["L","U","B2"])
         return
     if(edges[4][0]==8):
-        uradiAlgoritam(["D","L","D`"])
-        resenje.append(["D","L","D`"])
+        uradiAlgoritam(["D","L","D'"])
+        resenje.append(["D","L","D'"])
         return
     if(edges[4][0]==-8):
         uradiAlgoritam(["L","L","B"])
         resenje.append(["L","L","B"])
         return
     if(edges[4][0]==-11):
-        uradiAlgoritam(["B","D`","R","D"])
+        uradiAlgoritam(["B","D'","R","D"])
         resenje.append(["L","U","B2"])
         return
     if(edges[4][0]==12):
-        uradiAlgoritam(["L","D","L`","D`"])
-        resenje.append(["L","D","L`","D`"])
+        uradiAlgoritam(["L","D","L'","D'"])
+        resenje.append(["L","D","L'","D'"])
         return
     if(edges[4][0]==-12):
         uradiAlgoritam(["L","B"])
@@ -562,75 +549,75 @@ def crvenoBeliEdge():
         uradiAlgoritam(["U","L2"])
         resenje.append(["U","L2"])
         return
-    if(edges[4][0]==-1):
-        uradiAlgoritam(["L`","U","L","F`"])
-        resenje.append(["L`","U","L","F`"])
+    if(edges[3][0]==-1):
+        uradiAlgoritam(["L'","U","L","F'"])
+        resenje.append(["L'","U","L","F'"])
         return
-    if(edges[4][0]==2):
+    if(edges[3][0]==2):
         uradiAlgoritam(["U2","L2"])
         resenje.append(["U2","L2"])
         return
-    if(edges[4][0]==-2):
-        uradiAlgoritam(["U","F`","L","F"])
-        resenje.append(["U","F`","L","F"])
+    if(edges[3][0]==-2):
+        uradiAlgoritam(["U","F'","L","F"])
+        resenje.append(["U","F'","L","F"])
         return
-    if(edges[4][0]==3):
-        uradiAlgoritam(["U`","L2"])
-        resenje.append(["U`","L2"])
+    if(edges[3][0]==3):
+        uradiAlgoritam(["U'","L2"])
+        resenje.append(["U'","L2"])
         return
-    if(edges[4][0]==-3):
-        uradiAlgoritam(["B","L`","B`"])
-        resenje.append(["B","L`","B`"])
+    if(edges[3][0]==-3):
+        uradiAlgoritam(["B","L'","B'"])
+        resenje.append(["B","L'","B'"])
         return
-    if(edges[4][0]==4):
+    if(edges[3][0]==4):
         uradiAlgoritam(["L2"])
         resenje.append(["L2"])
         return
-    if(edges[4][0]==-4):
-        uradiAlgoritam(["L`","D`","B","D"])
-        resenje.append(["L`","D`","B","D"])
+    if(edges[3][0]==-4):
+        uradiAlgoritam(["L'","D'","B","D"])
+        resenje.append(["L'","D'","B","D"])
         return
-    if(edges[4][0]==5):
-        uradiAlgoritam(["R2","B`","R2"])
-        resenje.append(["R2","B`","R2"])
+    if(edges[3][0]==5):
+        uradiAlgoritam(["R2","B'","R2"])
+        resenje.append(["R2","B'","R2"])
         return
-    if(edges[4][0]==-5):
-        uradiAlgoritam(["R","U`","B2","R`"])
-        resenje.append(["R","U`","B2","R`"])
+    if(edges[3][0]==-5):
+        uradiAlgoritam(["R","U'","B2","R'"])
+        resenje.append(["R","U'","B2","R'"])
         return
-    if(edges[4][0]==6):
-        uradiAlgoritam(["R`","U`","R","B2"])
-        resenje.append(["R`","U`","R","B2"])
+    if(edges[3][0]==6):
+        uradiAlgoritam(["R'","U'","R","B2"])
+        resenje.append(["R'","U'","R","B2"])
         return
-    if(edges[4][0]==-6):
-        uradiAlgoritam(["B`"])
-        resenje.append(["B`"])
+    if(edges[3][0]==-6):
+        uradiAlgoritam(["B'"])
+        resenje.append(["B'"])
         return
-    if(edges[4][0]==7):
+    if(edges[3][0]==7):
         uradiAlgoritam(["B"])
         resenje.append(["B"])
         return
-    if(edges[4][0]==-7):
+    if(edges[3][0]==-7):
         uradiAlgoritam(["L","U","B2"])
         resenje.append(["L","U","B2"])
         return
-    if(edges[4][0]==8):
-        uradiAlgoritam(["D","L","D`"])
-        resenje.append(["D","L","D`"])
+    if(edges[3][0]==8):
+        uradiAlgoritam(["D","L","D'"])
+        resenje.append(["D","L","D'"])
         return
-    if(edges[4][0]==-8):
+    if(edges[3][0]==-8):
         uradiAlgoritam(["L","L","B"])
         resenje.append(["L","L","B"])
         return
-    if(edges[4][0]==-11):
-        uradiAlgoritam(["B","D`","R","D"])
+    if(edges[3][0]==-11):
+        uradiAlgoritam(["B","D'","R","D"])
         resenje.append(["L","U","B2"])
         return
-    if(edges[4][0]==12):
-        uradiAlgoritam(["L","D","L`","D`"])
-        resenje.append(["L","D","L`","D`"])
+    if(edges[3][0]==12):
+        uradiAlgoritam(["L","D","L'","D'"])
+        resenje.append(["L","D","L'","D'"])
         return
-    if(edges[4][0]==-12):
+    if(edges[3][0]==-12):
         uradiAlgoritam(["L","B"])
         resenje.append(["L","B"])
         return
@@ -642,16 +629,26 @@ def daLiJeBeliKrst():
 
 def beliKrst():
     inputEdges()
+    for i in edges:
+        print(i)
     zelenoBeliEdge()
-    tkinter.messagebox.showinfo(title="zelenobeli", message=resenje)
     if daLiJeBeliKrst():
         return
-    ispisiKocku()
-    if daLiJeBeliKrst():
-        return
-    plavoBeliEdge()
     inputEdges()
+    for i in edges:
+        print(i)
+    plavoBeliEdge()
+    if daLiJeBeliKrst():
+        return
+    inputEdges()
+    for i in edges:
+        print(i)
+    crvenoBeliEdge()
+    if daLiJeBeliKrst():
+        return
 
 uradiAlgoritam(scramble)
+beliKrst()
 ispisiKocku()
+print(resenje)
 
