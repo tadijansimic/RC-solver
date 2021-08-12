@@ -1,14 +1,14 @@
+import tkinter
+
 class Kocka:
-    f = ["Y", "B", "Y", "B", "G", "G", "G", "G", "W"]
-    r = ["R", "Y", "B", "O", "O", "W", "O", "W", "R"]
-    b = ["O", "Y", "Y", "B", "B", "B", "B", "R", "G"]
-    l = ["R", "W", "O", "R", "R", "O", "W", "R", "O"]
-    u = ["G", "G", "W", "O", "Y", "O", "G", "R", "B"]
-    d = ["B", "Y", "W", "Y", "W", "G", "R", "W", "Y"]
+    f = ["G", "G", "G", "G", "G", "G", "G", "G", "G"]
+    r = ["O", "O", "O", "O", "O", "O", "O", "O", "O"]
+    b = ["B", "B", "B", "B", "B", "B", "B", "B", "B"]
+    l = ["R", "R", "R", "R", "R", "R", "R", "R", "R"]
+    u = ["Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y"]
+    d = ["W", "W", "W", "W", "W", "W", "W", "W", "W"]
 
-
-algoritmi = {"okreniPrednjiEdge" : ["R'", "F", "R", "F'", "U"]}
-#scramble = ["R2", "D'", "U2", "L2", "D", "R", "D'", "F'", "D'", "B2", "L'", "D'", "B'", "D'", "L'", "F'", "L'", "B'", "L", "D2", "L", "R'", "U", "B'", "F'"]
+scramble = ["B"]
 # class Kocka:
 #     f = ["O", "B", "W", "G", "G", "O", "R", "B", "Y"]
 #     r = ["G", "R", "G", "W", "O", "B", "O", "Y", "W"]
@@ -21,6 +21,7 @@ kocka = Kocka
 resenje = []
 
 edges = [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]]
+
 def ispisiKocku():
     print("----------------------------------------------------")
     print("Prednja:")
@@ -46,6 +47,7 @@ def ispisiKocku():
     print("Donja:")
     for i in range(0, 9, 3):
         print(kocka.d[i] + " " + kocka.d[i + 1] + " " + kocka.d[i + 2])
+
 def mapiranje(s):
     if s == "W":
         return 0
@@ -59,6 +61,7 @@ def mapiranje(s):
         return 4
     elif s == "G":
         return 5
+
 def mainInput():
     print("Prednja strana:")
     kocka.f[0], kocka.f[1], kocka.f[2] = input().split(" ")
@@ -146,8 +149,216 @@ def inputEdges():
     edges[front][up] = 12
     edges[up][front] = -12
     #----------------------------
-#    for i in range(6):
-#        print(edges[i])
+
+def moveRight():
+    a = kocka.f[2]
+    b = kocka.f[5]
+    c = kocka.f[8]
+    kocka.f[2] = kocka.d[2]
+    kocka.f[5] = kocka.d[5]
+    kocka.f[8] = kocka.d[8]
+    kocka.d[2] = kocka.b[6]
+    kocka.d[5] = kocka.b[3]
+    kocka.d[8] = kocka.b[0]
+    kocka.b[6] = kocka.u[2]
+    kocka.b[3] = kocka.u[5]
+    kocka.b[0] = kocka.u[8]
+    kocka.u[2] = a
+    kocka.u[5] = b
+    kocka.u[8] = c
+    a = kocka.r[3]
+    b = kocka.r[6]
+    kocka.r[3] = kocka.r[7]
+    kocka.r[6] = kocka.r[8]
+    kocka.r[7] = kocka.r[5]
+    kocka.r[8] = kocka.r[2]
+    kocka.r[5] = kocka.r[1]
+    kocka.r[2] = kocka.r[0]
+    kocka.r[1] = a
+    kocka.r[0] = b
+def moveRightPrim():
+    moveRight()
+    moveRight()
+    moveRight()
+#!ok
+
+def moveLeftPrim():
+    a = kocka.f[0]
+    b = kocka.f[3]
+    c = kocka.f[6]
+    kocka.f[0] = kocka.d[0]
+    kocka.f[3] = kocka.d[3]
+    kocka.f[6] = kocka.d[6]
+    kocka.d[0] = kocka.b[8]
+    kocka.d[3] = kocka.b[5]
+    kocka.d[6] = kocka.b[2]
+    kocka.b[8] = kocka.u[0]
+    kocka.b[5] = kocka.u[3]
+    kocka.b[2] = kocka.u[6]
+    kocka.u[0] = a
+    kocka.u[3] = b
+    kocka.u[6] = c
+    a = kocka.l[3]
+    b = kocka.l[6]
+    kocka.l[3] = kocka.l[1]
+    kocka.l[6] = kocka.l[0]
+    kocka.l[1] = kocka.l[5]
+    kocka.l[0] = kocka.l[2]
+    kocka.l[5] = kocka.l[7]
+    kocka.l[2] = kocka.l[8]
+    kocka.l[7] = a
+    kocka.l[8] = b
+def moveLeft():
+    moveLeftPrim()
+    moveLeftPrim()
+    moveLeftPrim()
+#!ok
+
+def moveUp():
+    a = kocka.f[0]
+    b = kocka.f[1]
+    c = kocka.f[2]
+    kocka.f[0] = kocka.r[0]
+    kocka.f[1] = kocka.r[1]
+    kocka.f[2] = kocka.r[2]
+    kocka.r[0] = kocka.b[0]
+    kocka.r[1] = kocka.b[1]
+    kocka.r[2] = kocka.b[2]
+    kocka.b[0] = kocka.l[0]
+    kocka.b[1] = kocka.l[1]
+    kocka.b[2] = kocka.l[2]
+    kocka.l[0] = a
+    kocka.l[1] = b
+    kocka.l[2] = c
+    a = kocka.u[7]
+    b = kocka.u[8]
+    kocka.u[7] = kocka.u[5]
+    kocka.u[8] = kocka.u[2]
+    kocka.u[5] = kocka.u[1]
+    kocka.u[2] = kocka.u[0]
+    kocka.u[1] = kocka.u[3]
+    kocka.u[0] = kocka.u[6]
+    kocka.u[3] = a
+    kocka.u[6] = b
+def moveUpPrim():
+    moveUp()
+    moveUp()
+    moveUp()
+#!ok
+
+def moveFront():
+    a = kocka.l[2]
+    b = kocka.l[5]
+    c = kocka.l[8]
+    kocka.l[2] = kocka.d[0]
+    kocka.l[5] = kocka.d[1]
+    kocka.l[8] = kocka.d[2]
+    kocka.d[0] = kocka.r[6]
+    kocka.d[1] = kocka.r[3]
+    kocka.d[2] = kocka.r[0]
+    kocka.r[6] = kocka.u[8]
+    kocka.r[3] = kocka.u[7]
+    kocka.r[0] = kocka.u[6]
+    kocka.u[6] = c
+    kocka.u[7] = b
+    kocka.u[8] = a
+    a = kocka.f[0]
+    b = kocka.f[1]
+    kocka.f[0] = kocka.f[6]
+    kocka.f[1] = kocka.f[3]
+    kocka.f[6] = kocka.f[8]
+    kocka.f[3] = kocka.f[7]
+    kocka.f[8] = kocka.f[2]
+    kocka.f[7] = kocka.f[5]
+    kocka.f[2] = a
+    kocka.f[5] = b
+def moveFrontPrim():
+    moveFront()
+    moveFront()
+    moveFront()
+#!ok
+
+def moveDown():
+    a = kocka.f[6]
+    b = kocka.f[7]
+    c = kocka.f[8]
+    kocka.f[6] = kocka.l[6]
+    kocka.f[7] = kocka.l[7]
+    kocka.f[8] = kocka.l[8]
+    kocka.l[6] = kocka.b[6]
+    kocka.l[7] = kocka.b[7]
+    kocka.l[8] = kocka.b[8]
+    kocka.b[6] = kocka.r[6]
+    kocka.b[7] = kocka.r[7]
+    kocka.b[8] = kocka.r[8]
+    kocka.r[6] = a
+    kocka.r[7] = b
+    kocka.r[8] = c
+    a = kocka.d[7]
+    b = kocka.d[8]
+    kocka.d[7] = kocka.d[5]
+    kocka.d[8] = kocka.d[2]
+    kocka.d[5] = kocka.d[1]
+    kocka.d[2] = kocka.d[0]
+    kocka.d[1] = kocka.d[3]
+    kocka.d[0] = kocka.d[6]
+    kocka.d[3] = a
+    kocka.d[6] = b
+def moveDownPrim():
+    moveDown()
+    moveDown()
+    moveDown()
+#!ok
+
+def moveBack():
+    a = kocka.u[0]
+    b = kocka.u[1]
+    c = kocka.u[2]
+    kocka.u[0] = kocka.r[2]
+    kocka.u[1] = kocka.r[5]
+    kocka.u[2] = kocka.r[8]
+    kocka.r[2] = kocka.d[8]
+    kocka.r[5] = kocka.d[7]
+    kocka.r[8] = kocka.d[6]
+    kocka.d[8] = kocka.l[6]
+    kocka.d[7] = kocka.l[3]
+    kocka.d[6] = kocka.l[0]
+    kocka.l[0] = c
+    kocka.l[3] = b
+    kocka.l[6] = a
+    a = kocka.b[1]
+    b = kocka.b[0]
+    kocka.b[0] = kocka.b[6]
+    kocka.b[1] = kocka.b[3]
+    kocka.b[3] = kocka.b[7]
+    kocka.b[6] = kocka.b[8]
+    kocka.b[7] = kocka.b[5]
+    kocka.b[8] = kocka.b[2]
+    kocka.b[2] = b
+    kocka.b[5] = a
+def moveBackPrim():
+    moveBack()
+    moveBack()
+    moveBack()
+
+def R2():
+    moveRight()
+    moveRight()
+def F2():
+    moveFront()
+    moveFront()
+def L2():
+    moveLeft()
+    moveLeft()
+def D2():
+    moveDown()
+    moveDown()
+def U2():
+    moveUp()
+    moveUp()
+def B2():
+    moveBack()
+    moveBack()
 
 def uradiAlgoritam(niz):
     for i in niz:
@@ -187,204 +398,7 @@ def uradiAlgoritam(niz):
             U2()
         elif i == "D2":
             D2()
-def moveRight():
-    a = kocka.f[2]
-    b = kocka.f[5]
-    c = kocka.f[8]
-    kocka.f[2] = kocka.d[2]
-    kocka.f[5] = kocka.d[5]
-    kocka.f[8] = kocka.d[8]
-    kocka.d[2] = kocka.b[6]
-    kocka.d[5] = kocka.b[3]
-    kocka.d[8] = kocka.b[0]
-    kocka.b[6] = kocka.u[2]
-    kocka.b[3] = kocka.u[5]
-    kocka.b[0] = kocka.u[8]
-    kocka.u[2] = a
-    kocka.u[5] = b
-    kocka.u[8] = c
-    a = kocka.r[3]
-    b = kocka.r[6]
-    kocka.r[3] = kocka.r[7]
-    kocka.r[6] = kocka.r[8]
-    kocka.r[7] = kocka.r[5]
-    kocka.r[8] = kocka.r[2]
-    kocka.r[5] = kocka.r[1]
-    kocka.r[2] = kocka.r[0]
-    kocka.r[1] = a
-    kocka.r[0] = b
-def moveRightPrim():
-    moveRight()
-    moveRight()
-    moveRight()
-def moveLeftPrim():
-    a = kocka.f[0]
-    b = kocka.f[3]
-    c = kocka.f[6]
-    kocka.f[0] = kocka.d[0]
-    kocka.f[3] = kocka.d[3]
-    kocka.f[6] = kocka.d[6]
-    kocka.d[0] = kocka.b[8]
-    kocka.d[3] = kocka.b[5]
-    kocka.d[6] = kocka.b[2]
-    kocka.b[8] = kocka.u[0]
-    kocka.b[5] = kocka.u[3]
-    kocka.b[2] = kocka.u[6]
-    kocka.u[0] = a
-    kocka.u[3] = b
-    kocka.u[6] = c
-    a = kocka.l[3]
-    b = kocka.l[6]
-    kocka.l[3] = kocka.l[1]
-    kocka.l[6] = kocka.l[0]
-    kocka.l[1] = kocka.l[5]
-    kocka.l[0] = kocka.l[2]
-    kocka.l[5] = kocka.l[7]
-    kocka.l[2] = kocka.l[8]
-    kocka.l[7] = a
-    kocka.l[8] = b
-def moveLeft():
-    moveLeftPrim()
-    moveLeftPrim()
-    moveLeftPrim()
-def moveUp():
-    a = kocka.f[0]
-    b = kocka.f[1]
-    c = kocka.f[2]
-    kocka.f[0] = kocka.r[0]
-    kocka.f[1] = kocka.r[1]
-    kocka.f[2] = kocka.r[2]
-    kocka.r[0] = kocka.b[0]
-    kocka.r[1] = kocka.b[1]
-    kocka.r[2] = kocka.b[2]
-    kocka.b[0] = kocka.l[0]
-    kocka.b[1] = kocka.l[1]
-    kocka.b[2] = kocka.l[2]
-    kocka.l[0] = a
-    kocka.l[1] = b
-    kocka.l[2] = c
-    a = kocka.u[7]
-    b = kocka.u[8]
-    kocka.u[7] = kocka.u[5]
-    kocka.u[8] = kocka.u[2]
-    kocka.u[5] = kocka.u[1]
-    kocka.u[2] = kocka.u[0]
-    kocka.u[1] = kocka.u[3]
-    kocka.u[0] = kocka.u[6]
-    kocka.u[3] = a
-    kocka.u[6] = b
-def moveUpPrim():
-    moveUp()
-    moveUp()
-    moveUp()
-def moveFront():
-    a = kocka.l[2]
-    b = kocka.l[5]
-    c = kocka.l[8]
-    kocka.l[2] = kocka.d[0]
-    kocka.l[5] = kocka.d[1]
-    kocka.l[8] = kocka.d[2]
-    kocka.d[0] = kocka.r[6]
-    kocka.d[1] = kocka.r[3]
-    kocka.d[2] = kocka.r[0]
-    kocka.r[6] = kocka.u[8]
-    kocka.r[3] = kocka.u[7]
-    kocka.r[0] = kocka.u[6]
-    kocka.u[6] = c
-    kocka.u[7] = b
-    kocka.u[8] = a
-    a = kocka.f[0]
-    b = kocka.f[1]
-    kocka.f[0] = kocka.f[6]
-    kocka.f[1] = kocka.f[3]
-    kocka.f[6] = kocka.f[8]
-    kocka.f[3] = kocka.f[7]
-    kocka.f[8] = kocka.f[2]
-    kocka.f[7] = kocka.f[5]
-    kocka.f[2] = a
-    kocka.f[5] = b
-def moveFrontPrim():
-    moveFront()
-    moveFront()
-    moveFront()
-def moveDown():
-    a = kocka.f[6]
-    b = kocka.f[7]
-    c = kocka.f[8]
-    kocka.f[6] = kocka.l[6]
-    kocka.f[7] = kocka.l[7]
-    kocka.f[8] = kocka.l[8]
-    kocka.l[6] = kocka.b[6]
-    kocka.l[7] = kocka.b[7]
-    kocka.l[8] = kocka.b[8]
-    kocka.b[6] = kocka.r[6]
-    kocka.b[7] = kocka.r[7]
-    kocka.b[8] = kocka.r[8]
-    kocka.r[6] = a
-    kocka.r[7] = b
-    kocka.r[8] = c
-    a = kocka.d[7]
-    b = kocka.d[8]
-    kocka.d[7] = kocka.d[5]
-    kocka.d[8] = kocka.d[2]
-    kocka.d[5] = kocka.d[1]
-    kocka.d[2] = kocka.d[0]
-    kocka.d[1] = kocka.d[3]
-    kocka.d[0] = kocka.d[6]
-    kocka.d[3] = a
-    kocka.d[6] = b
-def moveDownPrim():
-    moveDown()
-    moveDown()
-    moveDown()
-def moveBack():
-    a = kocka.u[0]
-    b = kocka.u[1]
-    c = kocka.u[2]
-    kocka.u[0] = kocka.r[2]
-    kocka.u[1] = kocka.r[5]
-    kocka.u[2] = kocka.r[8]
-    kocka.r[2] = kocka.d[8]
-    kocka.r[5] = kocka.d[7]
-    kocka.r[8] = kocka.d[6]
-    kocka.d[8] = kocka.l[6]
-    kocka.d[7] = kocka.l[3]
-    kocka.d[6] = kocka.l[0]
-    kocka.l[0] = c
-    kocka.l[3] = b
-    kocka.l[6] = a
-    a = kocka.b[1]
-    b = kocka.b[0]
-    kocka.b[0] = kocka.b[6]
-    kocka.b[1] = kocka.b[3]
-    kocka.b[3] = kocka.b[7]
-    kocka.b[6] = kocka.b[8]
-    kocka.b[7] = kocka.b[5]
-    kocka.b[8] = kocka.b[2]
-    kocka.b[2] = b
-    kocka.b[5] = a
-def moveBackPrim():
-    moveBack()
-    moveBack()
-    moveBack()
-def R2():
-    moveRight()
-    moveRight()
-def F2():
-    moveFront()
-    moveFront()
-def L2():
-    moveLeft()
-    moveLeft()
-def D2():
-    moveDown()
-    moveDown()
-def U2():
-    moveUp()
-    moveUp()
-def B2():
-    moveBack()
-    moveBack()
+
 def zelenoBeliEdge():
     inputEdges()
     a = edges[0][5]
@@ -460,94 +474,6 @@ def zelenoBeliEdge():
     elif a == 12:
         uradiAlgoritam(["L'", "F'"])
         resenje.append(["L'", "F'"])
-def narandzastoBeliEdge():
-    inputEdges()
-    if(edges[2][0]==10):
-        return
-    if(edges[2][0]==1):
-        uradiAlgoritam(["U`","R2"])
-        resenje.append(["U`","R2"])
-        return
-    if(edges[2][0]==-1):
-        uradiAlgoritam(["F","R`","F`"])
-        resenje.append(["F","R`","F`"])
-        return
-    if(edges[2][0]==2):
-        uradiAlgoritam(["R2"])
-        resenje.append(["R2"])
-        return
-    if(edges[2][0]==-2):
-        uradiAlgoritam(["R`","F","D","F`"])
-        resenje.append(["R`","F","D","F`"])
-        return
-    if(edges[2][0]==3):
-        uradiAlgoritam(["U","R2"])
-        resenje.append(["U","R2"])
-        return
-    if(edges[2][0]==-3):
-        uradiAlgoritam(["B`","R"])
-        resenje.append(["B`","R"])
-        return
-    if(edges[2][0]==4):
-        uradiAlgoritam(["U2","R2"])
-        resenje.append(["U2","R2"])
-        return
-    if(edges[2][0]==-4):
-        uradiAlgoritam(["U","B`","R"])
-        resenje.append(["U","B`","R"])
-        return
-    if(edges[2][0]==5):
-        uradiAlgoritam(["D`","F","D"])
-        resenje.append(["D`","F","D"])
-        return
-    if(edges[2][0]==-5):
-        uradiAlgoritam(["R`"])
-        resenje.append(["R`"])
-        return
-    if(edges[2][0]==6):
-        uradiAlgoritam(["R"])
-        resenje.append(["R"])
-        return
-    if(edges[2][0]==-6):
-        uradiAlgoritam(["D","B`","D`"])
-        resenje.append(["D","B`","D`"])
-        return
-    if(edges[2][0]==7):
-        uradiAlgoritam(["D","B","D`"])
-        resenje.append(["D","B","D`"])
-        return
-    if(edges[2][0]==-7):
-        uradiAlgoritam(["B2","R"])
-        resenje.append(["B2","R"])
-        return
-    if(edges[4][0]==8):
-        uradiAlgoritam(["D2","L","D2"])
-        resenje.append(["D2","L","D2"])
-        return
-    if(edges[2][0]==-8):
-        uradiAlgoritam(["D`","F`","D"])
-        resenje.append(["D`","F`","D"])
-        return
-    if(edges[2][0]==-10):
-        uradiAlgoritam(["R`","B","F","R2"])
-        resenje.append(["R`","B","F","R2"])
-        return
-    if(edges[2][0]==11):
-        uradiAlgoritam(["B2"," F","R2"])
-        resenje.append(["B2"," F","R2"])
-        return
-    if(edges[2][0]==-11):
-        uradiAlgoritam(["B","R"])
-        resenje.append(["L","U","B2"])
-        return
-    if(edges[2][0]==12):
-        uradiAlgoritam(["L2","U2","R2"])
-        resenje.append(["L2","U2","R2"])
-        return
-    if(edges[2][0]==-12):
-        uradiAlgoritam(["L","B`","F","R2"])
-        resenje.append(["L","B`","F","R2"])
-        return  
 def plavoBeliEdge():
     inputEdges()
     if(edges[4][0]==11):
@@ -566,7 +492,7 @@ def plavoBeliEdge():
         return
     if(edges[4][0]==-2):
         uradiAlgoritam(["R","B`","R`"])
-        resenje.append(["U","B`","B"])
+        resenje.append(["U","L`","B"])
         return
     if(edges[4][0]==3):
         uradiAlgoritam(["B2"])
@@ -618,7 +544,7 @@ def plavoBeliEdge():
         return
     if(edges[4][0]==-11):
         uradiAlgoritam(["B","D`","R","D"])
-        resenje.append(["B","D`","R","D"])
+        resenje.append(["L","U","B2"])
         return
     if(edges[4][0]==12):
         uradiAlgoritam(["L","D","L`","D`"])
@@ -636,95 +562,96 @@ def crvenoBeliEdge():
         uradiAlgoritam(["U","L2"])
         resenje.append(["U","L2"])
         return
-    if(edges[3][0]==-1):
-        uradiAlgoritam(["F`","L","F"])
-        resenje.append(["F`","L","F"])
+    if(edges[4][0]==-1):
+        uradiAlgoritam(["L`","U","L","F`"])
+        resenje.append(["L`","U","L","F`"])
         return
-    if(edges[3][0]==2):
+    if(edges[4][0]==2):
         uradiAlgoritam(["U2","L2"])
         resenje.append(["U2","L2"])
         return
-    if(edges[3][0]==-2):
+    if(edges[4][0]==-2):
         uradiAlgoritam(["U","F`","L","F"])
         resenje.append(["U","F`","L","F"])
         return
-    if(edges[3][0]==3):
+    if(edges[4][0]==3):
         uradiAlgoritam(["U`","L2"])
         resenje.append(["U`","L2"])
         return
-    if(edges[3][0]==-3):
+    if(edges[4][0]==-3):
         uradiAlgoritam(["B","L`","B`"])
         resenje.append(["B","L`","B`"])
         return
-    if(edges[3][0]==4):
+    if(edges[4][0]==4):
         uradiAlgoritam(["L2"])
         resenje.append(["L2"])
         return
-    if(edges[3][0]==-4):
+    if(edges[4][0]==-4):
         uradiAlgoritam(["L`","D`","B","D"])
         resenje.append(["L`","D`","B","D"])
         return
-    if(edges[3][0]==5):
-        uradiAlgoritam(["D","F","D`"])
-        resenje.append(["D","F","D`"])
+    if(edges[4][0]==5):
+        uradiAlgoritam(["R2","B`","R2"])
+        resenje.append(["R2","B`","R2"])
         return
-    if(edges[3][0]==-5):
-        uradiAlgoritam(["D2","R`","D2"])
-        resenje.append(["D2","R`","D2"])
+    if(edges[4][0]==-5):
+        uradiAlgoritam(["R","U`","B2","R`"])
+        resenje.append(["R","U`","B2","R`"])
         return
-    if(edges[3][0]==6):
-        uradiAlgoritam(["D2","R","D2"])
-        resenje.append(["D2","R","D2"])
+    if(edges[4][0]==6):
+        uradiAlgoritam(["R`","U`","R","B2"])
+        resenje.append(["R`","U`","R","B2"])
         return
-    if(edges[3][0]==-6):
-        uradiAlgoritam(["D`","B`","D"])
-        resenje.append(["D`","B`","D"])
+    if(edges[4][0]==-6):
+        uradiAlgoritam(["B`"])
+        resenje.append(["B`"])
         return
-    if(edges[3][0]==7):
-        uradiAlgoritam(["D`","B","D"])
-        resenje.append(["D`","B","D"])
+    if(edges[4][0]==7):
+        uradiAlgoritam(["B"])
+        resenje.append(["B"])
         return
-    if(edges[3][0]==-7):
-        uradiAlgoritam(["L`"])
-        resenje.append(["L`"])
+    if(edges[4][0]==-7):
+        uradiAlgoritam(["L","U","B2"])
+        resenje.append(["L","U","B2"])
         return
-    if(edges[3][0]==8):
-        uradiAlgoritam(["L"])
-        resenje.append(["L"])
+    if(edges[4][0]==8):
+        uradiAlgoritam(["D","L","D`"])
+        resenje.append(["D","L","D`"])
         return
-    if(edges[3][0]==-8):
-        uradiAlgoritam(["D","F`","D`"])
-        resenje.append(["D","F`","D`"])
+    if(edges[4][0]==-8):
+        uradiAlgoritam(["L","L","B"])
+        resenje.append(["L","L","B"])
         return
-    if(edges[3][0]==-12):
-        uradiAlgoritam(["L`","D","F`","D`"])
-        resenje.append(["L`","D","F`","D`"])
+    if(edges[4][0]==-11):
+        uradiAlgoritam(["B","D`","R","D"])
+        resenje.append(["L","U","B2"])
         return
+    if(edges[4][0]==12):
+        uradiAlgoritam(["L","D","L`","D`"])
+        resenje.append(["L","D","L`","D`"])
+        return
+    if(edges[4][0]==-12):
+        uradiAlgoritam(["L","B"])
+        resenje.append(["L","B"])
+        return
+
 def daLiJeBeliKrst():
     if edges[0][0] == 0 and edges[0][2] == -10 and edges[0][3] == -12 and edges[0][4] == -11 and edges[0][5] == -9:
         return True
     return False
+
 def beliKrst():
     inputEdges()
-    if daLiJeBeliKrst():
-        return
     zelenoBeliEdge()
+    tkinter.messagebox.showinfo(title="zelenobeli", message=resenje)
     if daLiJeBeliKrst():
         return
-    narandzastoBeliEdge()
+    ispisiKocku()
     if daLiJeBeliKrst():
         return
     plavoBeliEdge()
-    if daLiJeBeliKrst():
-        return
-    crvenoBeliEdge()
     inputEdges()
 
-
-#uradiAlgoritam(scramble)
+uradiAlgoritam(scramble)
 ispisiKocku()
-beliKrst()
 
-print("RESENJE: ")
-print(resenje)
-ispisiKocku()
