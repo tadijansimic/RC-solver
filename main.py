@@ -1149,7 +1149,7 @@ def test2Layers():
         beliKrst()
         belaStrana()
         drugiLayer()
-        gornjiCross()
+        gornjiCrossOr()
         print("Resenje: ", end="")
         print(resenje)
         print("Output: ", end="")
@@ -1401,7 +1401,7 @@ def drugiLayer():
     plavoCrveniEdge()
     crvenoZeleniEdge()
 
-def gornjiCross():
+def gornjiCrossOr():
     if kocka.u[1] != "Y" and kocka.u[3] != "Y" and kocka.u[5] != "Y" and kocka.u[7] != "Y":
         uradiAlgoritam(["F", "R", "U", "R'", "U'", "S", "R", "U", "R'", "U'", "S'", "F'"])
         resenje.append(["F", "R", "U", "R'", "U'", "S", "R", "U", "R'", "U'", "S'", "F'"])
@@ -1433,5 +1433,21 @@ def gornjiCross():
         resenje.append(["U", "F", "R", "U", "R'", "U'", "F'"])
         return
     print("Edge is twisted!")
-
+def gornjiCrossP():
+    inputEdges()
+    if edges[5][1] == 1 and edges[2][1] == 2 and edges[4][1] == 3 and edges[3][1] == 4:
+        return
+    if edges[5][1] == 4 and edges[2][1] == 1 and edges[4][1] == 2 and edges[3][1] == 3:
+        uradiAlgoritam(["U'"])
+        resenje.append(["U'"])
+        return
+    if edges[5][1] == 3 and edges[2][1] == 4 and edges[4][1] == 1 and edges[3][1] == 2:
+        uradiAlgoritam(["U2"])
+        resenje.append(["U2"])
+        return
+    if edges[5][1] == 2 and edges[2][1] == 3 and edges[4][1] == 4 and edges[3][1] == 1:
+        uradiAlgoritam(["U"])
+        resenje.append(["U"])
+        return
+    
 test2Layers()
