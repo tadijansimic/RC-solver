@@ -1,4 +1,5 @@
 import tkinter
+import random
 
 class Kocka:
     f = ["G", "G", "G", "G", "G", "G", "G", "G", "G"]
@@ -8,7 +9,7 @@ class Kocka:
     u = ["Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y"]
     d = ["W", "W", "W", "W", "W", "W", "W", "W", "W"]
 
-scramble = ["R2", "D'", "U2", "L2", "D", "R", "D'", "F'", "D'", "B2", "L'", "D'", "B'", "D'", "L'", "F'", "L'", "B'", "L", "D2", "L", "R'", "U", "B'", "F'"]
+#scramble = list(map(str, input().split(" ")))
 # class Kocka:
 #     f = ["O", "B", "W", "G", "G", "O", "R", "B", "Y"]
 #     r = ["G", "R", "G", "W", "O", "B", "O", "Y", "W"]
@@ -329,6 +330,66 @@ def moveBackPrim():
     moveBack()
     moveBack()
     moveBack()
+def moveMPrim():
+    a = kocka.f[1]
+    b = kocka.f[7]
+    c = kocka.f[4]
+    kocka.f[1] = kocka.d[1]
+    kocka.f[4] = kocka.d[4]
+    kocka.f[7] = kocka.d[7]
+    kocka.d[1] = kocka.b[1]
+    kocka.d[4] = kocka.b[4]
+    kocka.d[7] = kocka.b[7]
+    kocka.b[1] = kocka.u[1]
+    kocka.b[4] = kocka.u[4]
+    kocka.b[7] = kocka.u[7]
+    kocka.u[1] = a
+    kocka.u[4] = c
+    kocka.u[7] = b
+def moveM():
+    moveMPrim()
+    moveMPrim()
+    moveMPrim()
+def moveS():
+    a = kocka.u[3]
+    b = kocka.u[5]
+    c = kocka.u[4]
+    kocka.u[3] = kocka.l[7]
+    kocka.u[5] = kocka.l[1]
+    kocka.u[4] = kocka.l[4]
+    kocka.l[1] = kocka.d[5]
+    kocka.l[7] = kocka.d[3]
+    kocka.l[4] = kocka.d[4]
+    kocka.d[3] = kocka.r[7]
+    kocka.d[5] = kocka.r[1]
+    kocka.d[4] = kocka.r[4]
+    kocka.r[1] = b
+    kocka.r[7] = a
+    kocka.r[4] = c
+def moveSPrim():
+    moveS()
+    moveS()
+    moveS()
+def moveE():
+    a = kocka.f[3]
+    b = kocka.f[5]
+    c = kocka.f[4]
+    kocka.f[3] = kocka.l[3]
+    kocka.f[5] = kocka.l[5]
+    kocka.f[4] = kocka.l[4]
+    kocka.l[5] = kocka.b[5]
+    kocka.l[3] = kocka.b[3]
+    kocka.l[4] = kocka.b[4]
+    kocka.b[3] = kocka.r[3]
+    kocka.b[5] = kocka.r[5]
+    kocka.b[4] = kocka.r[4]
+    kocka.r[3] = a
+    kocka.r[5] = b
+    kocka.r[4] = c
+def moveEPrim():
+    moveE()
+    moveE()
+    moveE()
 def R2():
     moveRight()
     moveRight()
@@ -347,6 +408,15 @@ def U2():
 def B2():
     moveBack()
     moveBack()
+def M2():
+    moveMPrim()
+    moveMPrim()
+def E2():
+    moveE()
+    moveE()
+def S2():
+    moveS()
+    moveS()
 def uradiAlgoritam(niz):
     for i in niz:
         if i == "R":
@@ -385,7 +455,60 @@ def uradiAlgoritam(niz):
             U2()
         elif i == "D2":
             D2()
-
+        elif i == "M":
+            moveM()
+        elif i == "M'":
+            moveMPrim()
+        elif i == "S":
+            moveS()
+        elif i == "S'":
+            moveSPrim()
+        elif i == "E":
+            moveE()
+        elif i == "E'":
+            moveEPrim()
+        elif i == "E2":
+            E2()
+        elif i == "M2":
+            M2()
+        elif i == "S2":
+            S2()
+        elif i == "X":
+            moveMPrim()
+            moveRight()
+            moveLeftPrim()
+        elif i == "X2":
+            M2()
+            L2()
+            R2()
+        elif i == "X'":
+            moveM()
+            moveRightPrim()
+            moveLeft()
+        elif i == "Y":
+            moveEPrim()
+            moveDownPrim()
+            moveUp()
+        elif i == "Y2":
+            E2()
+            D2()
+            U2()
+        elif i == "Y'":
+            moveE()
+            moveDown()
+            moveUpPrim()
+        elif i == "Z":
+            moveS()
+            moveFront()
+            moveBackPrim()
+        elif i == "Z2":
+            S2()
+            F2()
+            B2()
+        elif i == "Z'":
+            moveSPrim()
+            moveBack()
+            moveFrontPrim()
 def zelenoBeliEdge():
     a = edges[0][5]
     if a == -1:
@@ -672,12 +795,48 @@ def narandzastoBeliEdge():
         resenje.append(["L2", "U'", "F", "R'", "F'"])
         return  
 
+def daLiJeRotirana():
+    if kocka.f[4] == "G" and kocka.u[4] == "Y":
+        return True
+    return False
+def rotiraj():
+    if daLiJeRotirana():
+        return
+    if kocka.u[4] == "G":
+        uradiAlgoritam(["X'"])
+        resenje.append(["X'"])
+    elif kocka.b[4] == "G":
+        uradiAlgoritam(["X2"])
+        resenje.append(["X2"])
+    elif kocka.d[4] == "G":
+        uradiAlgoritam(["X"])
+        resenje.append(["X"])
+    elif kocka.r[4] == "G":
+        uradiAlgoritam(["Y"])
+        resenje.append(["Y"])
+    elif kocka.l[4] == "G":
+        uradiAlgoritam(["Y'"])
+        resenje.append(["Y'"])
+    if daLiJeRotirana():
+        return
+    if kocka.r[4] == "Y":
+        uradiAlgoritam(["Z'"])
+        resenje.append(["Z'"])
+    elif kocka.d[4] == "Y":
+        uradiAlgoritam(["Z2"])
+        resenje.append(["Z2"])
+    elif kocka.l[4] == "Y":
+        uradiAlgoritam(["Z"])
+        resenje.append(["Z"])
+
 def daLiJeBeliKrst():
     if edges[0][0] == 0 and edges[0][2] == -10 and edges[0][3] == -12 and edges[0][4] == -11 and edges[0][5] == -9:
         return True
     return False
 def beliKrst():
     inputEdges()
+    if daLiJeBeliKrst():
+        return
     zelenoBeliEdge()
     if daLiJeBeliKrst():
         return
@@ -692,8 +851,97 @@ def beliKrst():
     inputEdges()
     crvenoBeliEdge()
 
-uradiAlgoritam(scramble)
-beliKrst()
-ispisiKocku()
-print(resenje)
+def testCross():
+    potezi = ["R", "R'", "R2", "L", "L'", "L2", "U", "U'", "U2", "D", "D'", "D2", "F", "F'", "F2", "B", "B'", "B2", "M", "M2", "M'", "S", "S2", "S'", "E", "E'", "E2", "X", "Y", "Z"]
 
+    tacnih = 0
+    rotacija = 0
+    crveni = 0
+    plavi = 0
+    zeleni = 0
+    narandzasti = 0
+
+    fRotacija = open("ErrRotacija.txt", "w")
+    fPlavi = open("ErrPlavi.txt", "w")
+    fZeleni = open("ErrZeleni.txt", "w")
+    fNarandzasti = open("ErrNarandzasti.txt", "w")
+    fCrveni = open("ErrCrveni.txt", "w")
+    fPlavi.truncate(0)
+    fZeleni.truncate(0)
+    fCrveni.truncate(0)
+    fNarandzasti.truncate(0)
+    fRotacija.truncate(0)
+
+    n = int(input("Testova za rad: "))
+
+    for i in range(n):
+        duzina = random.randrange(5, 25)
+        scramble = []
+        strScramble = "["
+        resenje = []
+
+        for j in range(duzina): 
+            scramble.append(random.choice(potezi))
+        if j != 0:
+            strScramble += ", "
+        strScramble += '"' + scramble[j] + '"'
+        strScramble += "]\n"
+        print("Scramble: ", end="")
+        print(scramble)
+        uradiAlgoritam(scramble)
+
+        rotiraj()
+        if daLiJeRotirana() == False:  
+            print("fail rotacija")
+            fRotacija.write(strScramble)
+            rotacija += 1
+            continue
+
+        beliKrst()
+
+        print("Resenje: ", end="")
+        print(resenje)
+        print("Output: ", end="")
+
+        inputEdges()
+        if daLiJeBeliKrst():
+            print("pass")
+            tacnih += 1
+        else:
+            print("fail")
+
+        if edges[0][5] != -9:
+            zeleni += 1
+            fZeleni.write(strScramble)
+        if edges[0][2] != -10:
+            narandzasti += 1
+            fNarandzasti.write(strScramble)
+        if edges[0][4] != -11:
+            plavi += 1
+            fPlavi.write(strScramble)
+        if edges[0][3] != -12:
+            crveni += 1
+            fCrveni.write(strScramble)
+        print()
+
+    print("Pass: ", end="")
+    print(tacnih, end=" / ")
+    print(n)
+    print("FAILS:")
+    print("Rotacija   : ", end="")
+    print(rotacija)
+    print("Zelen      : ", end="")
+    print(zeleni)
+    print("Narandzasti: ", end="")
+    print(narandzasti)
+    print("Plavi      : ", end="")
+    print(plavi)
+    print("Crveni     : ", end="")
+    print(crveni)
+
+    fCrveni.close()
+    fPlavi.close()
+    fNarandzasti.close()
+    fZeleni.close()
+
+testCross()
