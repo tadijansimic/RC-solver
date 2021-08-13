@@ -1,3 +1,5 @@
+from abc import abstractproperty
+from os import scandir
 import tkinter
 import random
 
@@ -21,6 +23,10 @@ class Kocka:
 kocka = Kocka
 resenje = []
 
+solvedEdges = [[0, 0, -10, -12, -11, -9], [0, 0, -2, -4, -3, -1], [10, 2, 0, 0, 6, -5], [12, 4, 0, 0, -7, 8], [11, 3, -6, 7, 0, 0], [9, 1, 5, -8, 0, 0]]
+solvedCorners = [["GOY", "OBY", "BRY", "RGY"], ["GOW", "OBW", "BRW", "RGW"]]
+
+corners = [["", "", "", ""], ["", "", "", ""]]
 edges = [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]]
 
 def ispisiKocku():
@@ -150,6 +156,15 @@ def inputEdges():
     edges[front][up] = 12
     edges[up][front] = -12
     #----------------------------
+def inputCorners():
+    corners[0][0] = kocka.f[2] + kocka.r[0] + kocka.u[8]
+    corners[0][1] = kocka.r[2] + kocka.b[0] + kocka.u[2]
+    corners[0][2] = kocka.b[2] + kocka.l[0] + kocka.u[0]
+    corners[0][3] = kocka.l[2] + kocka.f[0] + kocka.u[6]
+    corners[1][0] = kocka.f[8] + kocka.r[6] + kocka.d[2]
+    corners[1][1] = kocka.r[8] + kocka.b[6] + kocka.d[8]
+    corners[1][2] = kocka.b[8] + kocka.l[6] + kocka.d[6]
+    corners[1][3] = kocka.l[8] + kocka.f[6] + kocka.d[0] 
 
 def moveRight():
     a = kocka.f[2]
@@ -338,12 +353,12 @@ def moveMPrim():
     kocka.f[1] = kocka.d[1]
     kocka.f[4] = kocka.d[4]
     kocka.f[7] = kocka.d[7]
-    kocka.d[1] = kocka.b[1]
+    kocka.d[1] = kocka.b[7]
     kocka.d[4] = kocka.b[4]
-    kocka.d[7] = kocka.b[7]
-    kocka.b[1] = kocka.u[1]
+    kocka.d[7] = kocka.b[1]
+    kocka.b[1] = kocka.u[7]
     kocka.b[4] = kocka.u[4]
-    kocka.b[7] = kocka.u[7]
+    kocka.b[7] = kocka.u[1]
     kocka.u[1] = a
     kocka.u[4] = c
     kocka.u[7] = b
@@ -358,14 +373,14 @@ def moveS():
     kocka.u[3] = kocka.l[7]
     kocka.u[5] = kocka.l[1]
     kocka.u[4] = kocka.l[4]
-    kocka.l[1] = kocka.d[5]
-    kocka.l[7] = kocka.d[3]
+    kocka.l[1] = kocka.d[3]
+    kocka.l[7] = kocka.d[5]
     kocka.l[4] = kocka.d[4]
     kocka.d[3] = kocka.r[7]
     kocka.d[5] = kocka.r[1]
     kocka.d[4] = kocka.r[4]
-    kocka.r[1] = b
-    kocka.r[7] = a
+    kocka.r[1] = a
+    kocka.r[7] = b
     kocka.r[4] = c
 def moveSPrim():
     moveS()
@@ -921,11 +936,11 @@ def testCrossNTimes():
 
         inputEdges()
         if daLiJeBeliKrst():
-            print("pass")
+            print("pass\n")
             tacnih += 1
             continue
         else:
-            print("fail")
+            print("fail\n")
             inputEdges()
             if edges[0][5] != -9:
                 zeleni += 1
@@ -943,12 +958,12 @@ def testCrossNTimes():
                 fCrveni.write(strScramble)
             print()
 
-    print("Dobrih rotacija: ", end="")
-    print(rotacija, end="\n\n")
+    print("\nDobrih rotacija: ", end="")
+    print(rotacija)
 
     print("Pass: ", end="")
     print(tacnih, end=" / ")
-    print(n)
+    print(n, end="\n\n")
     print("FAILURES:")
     print("Zeleni     : ", end="")
     print(zeleni)
@@ -965,13 +980,425 @@ def testCrossNTimes():
     fZeleni.close()
 def testCrossInput(scramble):
     uradiAlgoritam(scramble)
+    rotiraj()
+    beliKrst()
     ispisiKocku()
-    uradiAlgoritam(["X"])
     print(resenje)
-    ispisiKocku()
-    # beliKrst()
-    # ispisiKocku()
-    # print(resenje)
 
-# testCrossNTimes()
-testCrossInput(["S2", "D", "S", "E2", "F2", "S'", "D2"])
+def zelenoNarandzastoBeli():
+    if corners[0][0] == "GOW" or corners[0][0] == "GWO" or corners[0][0] == "WGO" or corners[0][0] == "WOG" or corners[0][0] == "OGW" or corners[0][0] == "OWG":
+        uradiAlgoritam(["R'", "F", "R", "F'"])
+        resenje.append(["R'", "F", "R", "F'"])
+        return
+    if corners[0][1] == "GOW" or corners[0][1] == "GWO" or corners[0][1] == "WGO" or corners[0][1] == "WOG" or corners[0][1] == "OGW" or corners[0][1] == "OWG":
+        uradiAlgoritam(["U", "R'", "F", "R", "F'"])
+        resenje.append(["U", "R'", "F", "R", "F'"])
+        return
+    if corners[0][2] == "GOW" or corners[0][2] == "GWO" or corners[0][2] == "WGO" or corners[0][2] == "WOG" or corners[0][2] == "OGW" or corners[0][2] == "OWG":
+        uradiAlgoritam(["U2", "R'", "F", "R", "F'"])
+        resenje.append(["U2", "R'", "F", "R", "F'"])
+        return
+    if corners[0][3] == "GOW" or corners[0][3] == "GWO" or corners[0][3] == "WGO" or corners[0][3] == "WOG" or corners[0][3] == "OGW" or corners[0][3] == "OWG":
+        uradiAlgoritam(["U'", "R'", "F", "R", "F'"])
+        resenje.append(["U'", "R'", "F", "R", "F'"])
+        return
+    if corners[1][0] == "GOW" or corners[1][0] == "GWO" or corners[1][0] == "WGO" or corners[1][0] == "WOG" or corners[1][0] == "OGW" or corners[1][0] == "OWG":
+        return
+    if corners[1][1] == "GOW" or corners[1][1] == "GWO" or corners[1][1] == "WGO" or corners[1][1] == "WOG" or corners[1][1] == "OGW" or corners[1][1] == "OWG":
+        uradiAlgoritam(["R'", "U2", "R", "U'", "R'", "F", "R", "F'"])
+        resenje.append(["R'", "U2", "R", "U'", "R'", "F", "R", "F'"])
+        return
+    if corners[1][2] == "GOW" or corners[1][2] == "GWO" or corners[1][2] == "WGO" or corners[1][2] == "WOG" or corners[1][2] == "OGW" or corners[1][2] == "OWG":
+        uradiAlgoritam(["L", "U2", "L'", "R'", "F", "R", "F'"])
+        resenje.append(["L", "U2", "L'", "R'", "F", "R", "F'"])
+        return
+    if corners[1][3] == "GOW" or corners[1][3] == "GWO" or corners[1][3] == "WGO" or corners[1][3] == "WOG" or corners[1][3] == "OGW" or corners[1][3] == "OWG":
+        uradiAlgoritam(["F", "U", "F'", "U2", "R'", "F", "R", "F'"])
+        resenje.append(["F", "U", "F'", "U2", "R'", "F", "R", "F'"])
+        return
+def narandzastoPlavoBeli():
+    if corners[0][0] == "OBW" or corners[0][0] == "OWB" or corners[0][0] == "WOB" or corners[0][0] == "WBO" or corners[0][0] == "BOW" or corners[0][0] == "BWO":
+        uradiAlgoritam(["U", "R'", "U2", "R"])
+        resenje.append(["U", "R'", "U2", "R"])
+        return
+    if corners[0][1] == "OBW" or corners[0][1] == "OWB" or corners[0][1] == "WOB" or corners[0][1] == "WBO" or corners[0][1] == "BOW" or corners[0][1] == "BWO":
+        uradiAlgoritam(["U'", "R'", "U", "R"])
+        resenje.append(["U'", "R'", "U", "R"])
+        return
+    if corners[0][2] == "OBW" or corners[0][2] == "OWB" or corners[0][2] == "WOB" or corners[0][2] == "WBO" or corners[0][2] == "BOW" or corners[0][2] == "BWO":
+        uradiAlgoritam(["R'", "U", "R"])
+        resenje.append(["R'", "U", "R"])
+        return
+    if corners[0][3] == "OBW" or corners[0][3] == "OWB" or corners[0][3] == "WOB" or corners[0][3] == "WBO" or corners[0][3] == "BOW" or corners[0][3] == "BWO":
+        uradiAlgoritam(["R'", "U2", "R"])
+        resenje.append(["R'", "U2", "R"])
+        return
+    if corners[1][2] == "OBW" or corners[1][2] == "OWB" or corners[1][2] == "WOB" or corners[1][2] == "WBO" or corners[1][2] == "BOW" or corners[1][2] == "BWO":
+        uradiAlgoritam(["R'", "L", "U", "L'", "R"])
+        resenje.append(["R'", "L", "U", "L'", "R"])
+        return
+    if corners[1][3] == "OBW" or corners[1][3] == "OWB" or corners[1][3] == "WOB" or corners[1][3] == "WBO" or corners[1][3] == "BOW" or corners[1][3] == "BWO":
+        uradiAlgoritam(["L'", "R'", "U2", "R", "L"])
+        resenje.append(["L'", "R'", "U2", "R", "L"])
+        return
+def plavoCrvenoBeli():
+    if corners[0][0] == "BRW" or corners[0][0] == "BWR" or corners[0][0] == "WBR" or corners[0][0] == "WRB" or corners[0][0] == "RBW" or corners[0][0] == "RWB":
+        uradiAlgoritam(["L", "U2", "L'"])
+        resenje.append(["L", "U2", "L'"])
+        return
+    if corners[0][1] == "BRW" or corners[0][1] == "BWR" or corners[0][1] == "WBR" or corners[0][1] == "WRB" or corners[0][1] == "RBW" or corners[0][1] == "RWB":
+        uradiAlgoritam(["L", "U'", "L'"])
+        resenje.append(["L", "U'", "L'"])
+        return
+    if corners[0][2] == "BRW" or corners[0][2] == "BWR" or corners[0][2] == "WBR" or corners[0][2] == "WRB" or corners[0][2] == "RBW" or corners[0][2] == "RWB":
+        uradiAlgoritam(["U", "L", "U'", "L'"])
+        resenje.append(["U", "L", "U'", "L'"])
+        return
+    if corners[0][3] == "BRW" or corners[0][3] == "BWR" or corners[0][3] == "WBR" or corners[0][3] == "WRB" or corners[0][3] == "RBW" or corners[0][3] == "RWB":
+        uradiAlgoritam(["U'", "L", "U2", "L'"])
+        resenje.append(["U'", "L", "U2", "L'"])
+        return
+    if corners[1][3] == "BRW" or corners[1][3] == "BWR" or corners[1][3] == "WBR" or corners[1][3] == "WRB" or corners[1][3] == "RBW" or corners[1][3] == "RWB":
+        uradiAlgoritam(["L'", "U2", "L2", "U'", "L'"])
+        resenje.append(["L'", "U2", "L2", "U'", "L'"])
+        return
+def crvenoZelenoBeli():
+    if corners[0][0] == "RGW" or corners[0][0] == "GWR" or corners[0][0] == "WRG" or corners[0][0] == "RWG" or corners[0][0] == "GRW" or corners[0][0] == "WGR":
+        uradiAlgoritam(["L'", "U", "L"])
+        resenje.append(["L'", "U", "L"])
+    if corners[0][1] == "RGW" or corners[0][1] == "GWR" or corners[0][1] == "WRG" or corners[0][1] == "RWG" or corners[0][1] == "GRW" or corners[0][1] == "WGR":
+        uradiAlgoritam(["L'", "U2", "L"])
+        resenje.append(["L'", "U2", "L"])
+    if corners[0][2] == "RGW" or corners[0][2] == "GWR" or corners[0][2] == "WRG" or corners[0][2] == "RWG" or corners[0][2] == "GRW" or corners[0][2] == "WGR":
+        uradiAlgoritam(["U", "L'", "U2", "L"])
+        resenje.append(["U", "L'", "U2", "L"])
+    if corners[0][3] == "RGW" or corners[0][3] == "GWR" or corners[0][3] == "WRG" or corners[0][3] == "RWG" or corners[0][3] == "GRW" or corners[0][3] == "WGR":
+        uradiAlgoritam(["U'", "L'", "U", "L"])
+        resenje.append(["U'", "L'", "U", "L"])
+def belaStrana():
+    inputCorners()
+    zelenoNarandzastoBeli()
+    inputCorners()
+    narandzastoPlavoBeli()
+    inputCorners()
+    plavoCrvenoBeli()
+    inputCorners()
+    crvenoZelenoBeli()
+    inputCorners()
+    print(corners[1])
+    if kocka.d[2] != "W":
+        uradiAlgoritam(["R", "U", "R'", "U'", "R", "U", "R'", "U'"])
+        resenje.append(["R", "U", "R'", "U'", "R", "U", "R'", "U'"])
+    if kocka.d[2] != "W":
+        uradiAlgoritam(["R", "U", "R'", "U'", "R", "U", "R'", "U'"])
+        resenje.append(["R", "U", "R'", "U'", "R", "U", "R'", "U'"])
+    uradiAlgoritam(["D"])
+    resenje.append(["D"])
+    inputCorners()
+    if kocka.d[2] != "W":
+        uradiAlgoritam(["R", "U", "R'", "U'", "R", "U", "R'", "U'"])
+        resenje.append(["R", "U", "R'", "U'", "R", "U", "R'", "U'"])
+    if kocka.d[2] != "W":
+        uradiAlgoritam(["R", "U", "R'", "U'", "R", "U", "R'", "U'"])
+        resenje.append(["R", "U", "R'", "U'", "R", "U", "R'", "U'"])
+    uradiAlgoritam(["D"])
+    resenje.append(["D"])
+    inputCorners()
+    if kocka.d[2] != "W":
+        uradiAlgoritam(["R", "U", "R'", "U'", "R", "U", "R'", "U'"])
+        resenje.append(["R", "U", "R'", "U'", "R", "U", "R'", "U'"])
+    if kocka.d[2] != "W":
+        uradiAlgoritam(["R", "U", "R'", "U'", "R", "U", "R'", "U'"])
+        resenje.append(["R", "U", "R'", "U'", "R", "U", "R'", "U'"])
+    uradiAlgoritam(["D"])
+    resenje.append(["D"])
+    inputCorners()
+    if kocka.d[2] != "W":
+        uradiAlgoritam(["R", "U", "R'", "U'", "R", "U", "R'", "U'"])
+        resenje.append(["R", "U", "R'", "U'", "R", "U", "R'", "U'"])
+    if kocka.d[2] != "W":
+        uradiAlgoritam(["R", "U", "R'", "U'", "R", "U", "R'", "U'"])
+        resenje.append(["R", "U", "R'", "U'", "R", "U", "R'", "U'"])
+    uradiAlgoritam(["D"])
+    resenje.append(["D"])
+
+def testWhiteSideNTimes():
+    potezi = ["R", "R'", "R2", "L", "L'", "L2", "U", "U'", "U2", "D", "D'", "D2", "F", "F'", "F2", "B", "B'", "B2", "M", "M2", "M'", "S", "S2", "S'", "E", "E'", "E2", "X", "Y", "Z"]
+
+    tacnih = 0
+
+    n = int(input("Testova za rad: "))
+
+    for i in range(n):
+        duzina = random.randrange(5, 25)
+        scramble = []
+        strScramble = ""
+        resenje = []
+
+        for j in range(duzina): 
+            scramble.append(random.choice(potezi))
+            if j != 0:
+                strScramble += ", "
+            strScramble += '"' + scramble[j] + '"'
+        strScramble += "\n"
+        print("Scramble: ", end="")
+        print(scramble)
+        uradiAlgoritam(scramble)
+        
+        rotiraj()
+        beliKrst()
+        belaStrana()
+        drugiLayer()
+        print("Resenje: ", end="")
+        print(resenje)
+        print("Output: ", end="")
+
+        inputEdges()
+        if daLiJeBeliKrst():
+            inputCorners()
+            if corners[1] == solvedCorners[1]:
+                if edges[3][5] == 8:
+                    print("pass")
+                    tacnih += 1
+                    continue
+        print("fail")
+        print(corners[1], end="\n\n")
+        print()
+
+
+    print("Pass: ", end="")
+    print(tacnih, end=" / ")
+    print(n)
+def testWhiteSide(scramble):
+    print(scramble, end="\n\n")
+    uradiAlgoritam(scramble)
+    rotiraj()
+    beliKrst()
+    belaStrana()
+    drugiLayer()
+    ispisiKocku()
+    print(resenje)
+
+def narandzastoZeleniEdge():
+    inputEdges()
+    if edges[2][5] == -1:
+        uradiAlgoritam(["U", "R", "U'", "R'", "U'", "F'", "U", "F"])
+        resenje.append(["U", "R", "U'", "R'", "U'", "F'", "U", "F"])
+        return
+    if edges[2][5] == -2:
+        uradiAlgoritam(["U"])
+        resenje.append(["U"])
+        narandzastoZeleniEdge()
+        return
+    if edges[2][5] == -3:
+        uradiAlgoritam(["U2"])
+        resenje.append(["U2"])
+        narandzastoZeleniEdge()
+        return
+    if edges[2][5] == -4:
+        uradiAlgoritam(["U'"])
+        resenje.append(["U'"])
+        narandzastoZeleniEdge()
+        return
+    if edges[2][5] == 2:
+        uradiAlgoritam(["U'", "F'", "U", "F", "U", "R", "U'", "R'"])
+        resenje.append(["U'", "F'", "U", "F", "U", "R", "U'", "R'"])
+        return
+    if edges[2][5] == 1:
+        uradiAlgoritam(["U'"])
+        resenje.append(["U'"])
+        narandzastoZeleniEdge()
+        return
+    if edges[2][5] == 3:
+        uradiAlgoritam(["U"])
+        resenje.append(["U"])
+        narandzastoZeleniEdge()
+        return
+    if edges[2][5] == 4:
+        uradiAlgoritam(["U2"])
+        resenje.append(["U2"])
+        narandzastoZeleniEdge()
+        return
+    if edges[2][5] == 5:
+        uradiAlgoritam(["U", "R", "U'", "R'", "U'", "F'", "U", "F"])
+        resenje.append(["U", "R", "U'", "R'", "U'", "F'", "U", "F"])
+        narandzastoZeleniEdge()
+        return
+    if edges[2][5] == 6 or edges[2][5] == -6:
+        uradiAlgoritam(["U", "B", "U'", "B'", "U'", "R'", "U", "R"])
+        resenje.append(["U", "B", "U'", "B'", "U'", "R'", "U", "R"])
+        narandzastoZeleniEdge()
+        return
+    if edges[2][5] == 7 or edges[2][5] == -7:
+        uradiAlgoritam(["U'", "B'", "U", "B", "U", "L", "U'", "L'"])
+        resenje.append(["U'", "B'", "U", "B", "U", "L", "U'", "L'"])
+        narandzastoZeleniEdge()
+        return
+    if edges[2][5] == 8 or edges[2][5] == -8:
+        uradiAlgoritam(["U'", "L'", "U", "L", "U", "F", "U'", "F'"])
+        resenje.append(["U'", "L'", "U", "L", "U", "F", "U'", "F'"])
+        narandzastoZeleniEdge()
+        return
+def narandzastoPlaviEdge():
+    inputEdges()
+    if edges[2][4] == 2:
+        uradiAlgoritam(["U", "B", "U'", "B'", "U'", "R'", "U", "R"])
+        resenje.append(["U", "B", "U'", "B'", "U'", "R'", "U", "R"])
+        return
+    if edges[2][4] == 1:
+        uradiAlgoritam(["U'"])
+        resenje.append(["U'"])
+        narandzastoPlaviEdge()
+        return
+    if edges[2][4] == 3:
+        uradiAlgoritam(["U"])
+        resenje.append(["U"])
+        narandzastoPlaviEdge()
+        return
+    if edges[2][4] == 4:
+        uradiAlgoritam(["U2"])
+        resenje.append(["U2"])
+        narandzastoPlaviEdge()
+        return
+    if edges[2][4] == -3:
+        uradiAlgoritam(["U'", "R'", "U", "R", "U", "B", "U'", "B'"])
+        resenje.append(["U'", "R'", "U", "R", "U", "B", "U'", "B'"])
+        return
+    if edges[2][4] == -1:
+        uradiAlgoritam(["U2"])
+        resenje.append(["U2"])
+        narandzastoPlaviEdge()
+        return
+    if edges[2][4] == -2:
+        uradiAlgoritam(["U'"])
+        resenje.append(["U'"])
+        narandzastoPlaviEdge()
+        return
+    if edges[2][4] == -4:
+        uradiAlgoritam(["U"])
+        resenje.append(["U"])
+        narandzastoPlaviEdge()
+        return
+    if edges[2][4] == -6:
+        uradiAlgoritam(["U", "B", "U'", "B'", "U'", "R'", "U", "R"])
+        resenje.append(["U", "B", "U'", "B'", "U'", "R'", "U", "R"])
+        narandzastoPlaviEdge()
+        return
+    if edges[2][4] == -7 or edges[2][4] == 7:
+        uradiAlgoritam(["U'", "B'", "U", "B", "U", "L", "U'", "L'"])
+        resenje.append(["U'", "B'", "U", "B", "U", "L", "U'", "L'"])
+        narandzastoPlaviEdge()
+        return
+    if edges[2][4] == 8 or edges[2][4] == -8:
+        uradiAlgoritam(["U'", "L'", "U", "L", "U", "F", "U'", "F'"])
+        resenje.append(["U'", "L'", "U", "L", "U", "F", "U'", "F'"])
+        narandzastoPlaviEdge()
+        return
+def plavoCrveniEdge():
+    inputEdges()
+    if edges[4][3] == -4:
+        uradiAlgoritam(["U'", "B'", "U", "B", "U", "L", "U'", "L'"])
+        resenje.append(["U'", "B'", "U", "B", "U", "L", "U'", "L'"])
+        return
+    if edges[4][3] == -1:
+        uradiAlgoritam(["U"])
+        resenje.append(["U"])
+        plavoCrveniEdge()
+        return
+    if edges[4][3] == -2:
+        uradiAlgoritam(["U2"])
+        resenje.append(["U2"])
+        plavoCrveniEdge()
+        return
+    if edges[4][3] == -3:
+        uradiAlgoritam(["U'"])
+        resenje.append(["U'"])
+        plavoCrveniEdge()
+        return
+    if edges[4][3] == 3:
+        uradiAlgoritam(["U", "L", "U'", "L'", "U'", "B'", "U", "B"])
+        resenje.append(["U", "L", "U'", "L'", "U'", "B'", "U", "B"])
+        return
+    if edges[4][3] == 1:
+        uradiAlgoritam(["U2"])
+        resenje.append(["U2"])
+        plavoCrveniEdge()
+        return
+    if edges[4][3] == 2:
+        uradiAlgoritam(["U'"])
+        resenje.append(["U'"])
+        plavoCrveniEdge()
+        return
+    if edges[4][3] == 4:
+        uradiAlgoritam(["U"])
+        resenje.append(["U"])
+        plavoCrveniEdge()
+        return
+    if edges[4][3] == -6:
+        uradiAlgoritam(["U", "L", "U'", "L'", "U'", "B'", "U", "B"])
+        resenje.append(["U", "L", "U'", "L'", "U'", "B'", "U", "B"])
+        plavoCrveniEdge()
+        return
+    if edges[4][3] == 7 or edges[4][3] == -7:
+        uradiAlgoritam(["U'", "B'", "U", "B", "U", "L", "U'", "L'"])
+        resenje.append(["U'", "B'", "U", "B", "U", "L", "U'", "L'"])
+        plavoCrveniEdge()
+        return
+    if edges[4][3] == 8 or edges[4][3] == -8:
+        uradiAlgoritam(["U'", "L'", "U", "L", "U", "F", "U'", "F'"])
+        resenje.append(["U'", "L'", "U", "L", "U", "F", "U'", "F'"])
+        plavoCrveniEdge()
+        return
+def crvenoZeleniEdge():
+    inputEdges()
+    if edges[3][5] == -1:
+        uradiAlgoritam(["U'", "L'", "U", "L", "U", "F", "U'", "F'"])
+        resenje.append(["U'", "L'", "U", "L", "U", "F", "U'", "F'"])
+        return
+    if edges[3][5] == -2:
+        uradiAlgoritam(["U"])
+        resenje.append(["U"])
+        crvenoZeleniEdge()
+        return
+    if edges[3][5] == -3:
+        uradiAlgoritam(["U2"])
+        resenje.append(["U2"])
+        crvenoZeleniEdge()
+        return
+    if edges[3][5] == -4:
+        uradiAlgoritam(["U'"])
+        resenje.append(["U'"])
+        crvenoZeleniEdge()
+        return
+    if edges[3][5] == 4:
+        uradiAlgoritam(["U", "F", "U'", "F'", "U'", "L'", "U", "L"])
+        resenje.append(["U", "F", "U'", "F'", "U'", "L'", "U", "L"])
+        return
+    if edges[3][5] == 1:
+        uradiAlgoritam(["U"])
+        resenje.append(["U"])
+        crvenoZeleniEdge()
+        return
+    if edges[3][5] == 3:
+        uradiAlgoritam(["U'"])
+        resenje.append(["U'"])
+        crvenoZeleniEdge()
+        return
+    if edges[3][5] == 2:
+        uradiAlgoritam(["U2"])
+        resenje.append(["U2"])
+        crvenoZeleniEdge()
+        return
+    if edges[3][5] == -8:
+        uradiAlgoritam(["U'", "L'", "U", "L", "U", "F", "U'", "F'"])
+        resenje.append(["U'", "L'", "U", "L", "U", "F", "U'", "F'"])
+        crvenoZeleniEdge()
+        return
+def drugiLayer():
+    narandzastoZeleniEdge()
+    narandzastoPlaviEdge()
+    plavoCrveniEdge()
+    crvenoZeleniEdge()
+
+# testWhiteSide(['E2', 'D2', 'L2', 'U', 'F', 'R', 'M', 'S', "D'", 'F', 'U', 'M2', 'D2', 'E2', 'D', "B'", "E'", 'Y', 'D2', 'S', "D'", 'B', 'S', 'S2'])
+testWhiteSideNTimes()
