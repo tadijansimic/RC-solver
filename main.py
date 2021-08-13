@@ -1,7 +1,7 @@
 from abc import abstractproperty
 from os import scandir
-import tkinter
 import random
+from tkinter.constants import END
 
 class Kocka:
     f = ["G", "G", "G", "G", "G", "G", "G", "G", "G"]
@@ -1122,7 +1122,7 @@ def belaStrana():
     uradiAlgoritam(["D"])
     resenje.append(["D"])
 
-def testWhiteSideNTimes():
+def test2Layers():
     potezi = ["R", "R'", "R2", "L", "L'", "L2", "U", "U'", "U2", "D", "D'", "D2", "F", "F'", "F2", "B", "B'", "B2", "M", "M2", "M'", "S", "S2", "S'", "E", "E'", "E2", "X", "Y", "Z"]
 
     tacnih = 0
@@ -1149,6 +1149,7 @@ def testWhiteSideNTimes():
         beliKrst()
         belaStrana()
         drugiLayer()
+        gornjiCross()
         print("Resenje: ", end="")
         print(resenje)
         print("Output: ", end="")
@@ -1157,7 +1158,7 @@ def testWhiteSideNTimes():
         if daLiJeBeliKrst():
             inputCorners()
             if corners[1] == solvedCorners[1]:
-                if edges[3][5] == 8:
+                if kocka.u[5] == "Y" and kocka.u[1] == "Y" and kocka.u[3] == "Y" and kocka.u[7] == "Y":
                     print("pass")
                     tacnih += 1
                     continue
@@ -1169,7 +1170,7 @@ def testWhiteSideNTimes():
     print("Pass: ", end="")
     print(tacnih, end=" / ")
     print(n)
-def testWhiteSide(scramble):
+def test2LayersS(scramble):
     print(scramble, end="\n\n")
     uradiAlgoritam(scramble)
     rotiraj()
@@ -1400,5 +1401,37 @@ def drugiLayer():
     plavoCrveniEdge()
     crvenoZeleniEdge()
 
-# testWhiteSide(['E2', 'D2', 'L2', 'U', 'F', 'R', 'M', 'S', "D'", 'F', 'U', 'M2', 'D2', 'E2', 'D', "B'", "E'", 'Y', 'D2', 'S', "D'", 'B', 'S', 'S2'])
-testWhiteSideNTimes()
+def gornjiCross():
+    if kocka.u[1] != "Y" and kocka.u[3] != "Y" and kocka.u[5] != "Y" and kocka.u[7] != "Y":
+        uradiAlgoritam(["F", "R", "U", "R'", "U'", "S", "R", "U", "R'", "U'", "S'", "F'"])
+        resenje.append(["F", "R", "U", "R'", "U'", "S", "R", "U", "R'", "U'", "S'", "F'"])
+        return
+    if kocka.u[5] == "Y" and kocka.u[1] == "Y" and kocka.u[3] == "Y" and kocka.u[7] == "Y":
+        return
+    if kocka.u[5] == "Y" and kocka.u[7] == "Y":
+        uradiAlgoritam(["F", "S", "R", "U", "R'", "U'", "S'", "F'"])
+        resenje.append(["F", "S", "R", "U", "R'", "U'", "S'", "F'"])
+        return
+    if kocka.u[5] == "Y" and kocka.u[1] == "Y":
+        uradiAlgoritam(["U", "F", "S", "R", "U", "R'", "U'", "S'", "F'"])
+        resenje.append(["U", "F", "S", "R", "U", "R'", "U'", "S'", "F'"])
+        return
+    if kocka.u[1] == "Y" and kocka.u[3] == "Y":
+        uradiAlgoritam(["U2", "F", "S", "R", "U", "R'", "U'", "S'", "F'"])
+        resenje.append(["U2", "F", "S", "R", "U", "R'", "U'", "S'", "F'"])
+        return
+    if kocka.u[3] == "Y" and kocka.u[7] == "Y":
+        uradiAlgoritam(["U'", "F", "S", "R", "U", "R'", "U'", "S'", "F'"])
+        resenje.append(["U'", "F", "S", "R", "U", "R'", "U'", "S'", "F'"])
+        return
+    if kocka.u[3] == "Y" and kocka.u[5] == "Y":
+        uradiAlgoritam(["F", "R", "U", "R'", "U'", "F'"])
+        resenje.append(["F", "R", "U", "R'", "U'", "F'"])
+        return
+    if kocka.u[1] == "Y" and kocka.u[7] == "Y":
+        uradiAlgoritam(["U", "F", "R", "U", "R'", "U'", "F'"])
+        resenje.append(["U", "F", "R", "U", "R'", "U'", "F'"])
+        return
+    print("Edge is twisted!")
+
+test2Layers()
