@@ -1145,26 +1145,31 @@ def test2Layers():
         print(scramble)
         uradiAlgoritam(scramble)
         
-        rotiraj()
-        beliKrst()
-        belaStrana()
-        drugiLayer()
-        gornjiCrossOr()
+        slozi()
+
         print("Resenje: ", end="")
         print(resenje)
         print("Output: ", end="")
 
         inputEdges()
-        if daLiJeBeliKrst():
-            inputCorners()
-            if corners[1] == solvedCorners[1]:
-                if kocka.u[5] == "Y" and kocka.u[1] == "Y" and kocka.u[3] == "Y" and kocka.u[7] == "Y":
-                    print("pass")
-                    tacnih += 1
-                    continue
-        print("fail")
-        print(corners[1], end="\n\n")
-        print()
+        inputCorners()
+        if kocka.f[4] == "O":
+            uradiAlgoritam(["Y'"])
+            print("Orange")
+        elif kocka.f[4] == "B":
+            print("Blue")
+            uradiAlgoritam(["Y2"])
+        elif kocka.f[4] == "R":
+            print("Red")
+            uradiAlgoritam(["Y"])
+        k1 = Kocka()
+        if daLiJeSlozena():
+            print("pass")
+            tacnih += 1
+            continue
+    print("fail")
+    ispisiKocku()
+    print()
 
 
     print("Pass: ", end="")
@@ -1173,10 +1178,7 @@ def test2Layers():
 def test2LayersS(scramble):
     print(scramble, end="\n\n")
     uradiAlgoritam(scramble)
-    rotiraj()
-    beliKrst()
-    belaStrana()
-    drugiLayer()
+    slozi()
     ispisiKocku()
     print(resenje)
 
@@ -1449,5 +1451,165 @@ def gornjiCrossP():
         uradiAlgoritam(["U"])
         resenje.append(["U"])
         return
-    
-test2Layers()
+    for i in range(4):
+        l = [kocka.f[1], kocka.r[1], kocka.b[1], kocka.l[1]]
+        if l[0] == "B" and l[2] == "G" and l[1] == "O" and l[3] == "R":
+            uradiAlgoritam(["R", "U", "R'", "U", "R", "U2", "R'", "U'", "R", "U", "R'", "U", "R", "U2", "R'"])
+            resenje.append(["R", "U", "R'", "U", "R", "U2", "R'", "U'", "R", "U", "R'", "U", "R", "U2", "R'"])
+            return
+        uradiAlgoritam(["U"])
+        resenje.append(["U"])
+    for i in range(4):
+        l = [kocka.f[1], kocka.r[1], kocka.b[1], kocka.l[1]] #narandzasta plava
+        if l[0] == "R" and l[2] == "B" and l[1] == "O" and l[3] == "G":
+            uradiAlgoritam(["R", "U", "R'", "U", "R", "U2", "R'", "U"])
+            resenje.append(["R", "U", "R'", "U", "R", "U2", "R'", "U"])
+            return
+        uradiAlgoritam(["U"])
+        resenje.append(["U"])
+    for i in range(4):
+        l = [kocka.f[1], kocka.r[1], kocka.b[1], kocka.l[1]] # crvena zelena
+        if l[0] == "O" and l[1] == "R" and l[2] == "G" and l[3] == "B":
+            uradiAlgoritam(["R", "U", "R'", "U", "R", "U2", "R'", "U'"])
+            resenje.append(["R", "U", "R'", "U", "R", "U2", "R'", "U'"])
+            return
+        uradiAlgoritam(["U"])
+        resenje.append(["U"])
+    for i in range(4):
+        l = [kocka.f[1], kocka.r[1], kocka.b[1], kocka.l[1]] # 
+        if l[0] == "B" and l[1] == "G" and l[2] == "O" and l[3] == "R":
+            uradiAlgoritam(["R", "U", "R'", "U", "R", "U2", "R'", "U2"])
+            resenje.append(["R", "U", "R'", "U", "R", "U2", "R'", "U2"])
+            return
+        uradiAlgoritam(["U"])
+        resenje.append(["U"])
+    for i in range(4):
+        l = [kocka.f[1], kocka.r[1], kocka.b[1], kocka.l[1]] # 
+        if l[0] == "G" and l[1] == "B" and l[2] == "R" and l[3] == "O":
+            uradiAlgoritam(["R", "U", "R'", "U", "R", "U2", "R'"])
+            resenje.append(["R", "U", "R'", "U", "R", "U2", "R'"])
+            return
+        uradiAlgoritam(["U"])
+        resenje.append(["U"])
+
+def gornjiCorneriP():
+    inputCorners()
+    if corners[0][0] in ["YOG", "YGO", "OGY", "OYG", "GOY", "GYO"]:
+        gornjiCorneriP1()
+        return
+    if corners[0][1] in ["YOB", "YBO", "OBY", "OYB", "BYO", "BOY"]:
+        uradiAlgoritam(["Y"])
+        resenje.append(["Y"])
+        gornjiCorneriP1()
+        return
+    if corners[0][2] in ["BYR", "BRY", "RYB", "RBY", "YBR", "YRB"]:
+        uradiAlgoritam(["Y2"])
+        resenje.append(["Y2"])
+        gornjiCorneriP1()
+        return
+    if corners[0][3] in ["RGY", "RYG", "YGR", "YRG", "GYR", "GRY"]:
+        uradiAlgoritam(["Y'"])
+        resenje.append(["Y'"])
+        gornjiCorneriP1()
+        return
+    uradiAlgoritam(["U", "R", "U'", "L'", "U", "R'", "U'", "L"])
+    resenje.append(["U", "R", "U'", "L'", "U", "R'", "U'", "L"])
+    gornjiCorneriP()
+def gornjiCorneriP1():
+    inputCorners()
+    zelNarZut = 0
+    plavNarZut = 1
+    if kocka.f[4] == "O":
+        zelNarZut = 3
+        plavNarZut = 0
+    elif kocka.f[4] == "B":
+        zelNarZut = 2
+        plavNarZut = 3
+    elif kocka.f[4] == "R":
+        zelNarZut = 1
+        plavNarZut = 2
+    if corners[0][zelNarZut] in ["YOG", "YGO", "OGY", "OYG", "GOY", "GYO"] and corners[0][plavNarZut] in ["YOB", "YBO", "OBY", "OYB", "BYO", "BOY"]:
+        return
+    uradiAlgoritam(["U", "R", "U'", "L'", "U", "R'", "U'", "L"])
+    resenje.append(["U", "R", "U'", "L'", "U", "R'", "U'", "L"])
+    gornjiCorneriP1()
+def gornjiCorneriO():
+    while kocka.u[8] != "Y":
+        uradiAlgoritam(["R'", "D", "R", "D'", "R'", "D", "R", "D'"])
+        resenje.append(["R'", "D", "R", "D'", "R'", "D", "R", "D'"])
+    uradiAlgoritam(["U"])
+    resenje.append(["U"])
+    while kocka.u[8] != "Y":
+        uradiAlgoritam(["R'", "D", "R", "D'", "R'", "D", "R", "D'"])
+        resenje.append(["R'", "D", "R", "D'", "R'", "D", "R", "D'"])
+    uradiAlgoritam(["U"])
+    resenje.append(["U"])
+    while kocka.u[8] != "Y":
+        uradiAlgoritam(["R'", "D", "R", "D'", "R'", "D", "R", "D'"])
+        resenje.append(["R'", "D", "R", "D'", "R'", "D", "R", "D'"])
+    uradiAlgoritam(["U"])
+    resenje.append(["U"])
+    while kocka.u[8] != "Y":
+        uradiAlgoritam(["R'", "D", "R", "D'", "R'", "D", "R", "D'"])
+        resenje.append(["R'", "D", "R", "D'", "R'", "D", "R", "D'"])
+    uradiAlgoritam(["U"])
+    resenje.append(["U"])
+
+def slozi():
+    rotiraj()
+    beliKrst()
+    belaStrana()
+    drugiLayer()
+    gornjiCrossOr()
+    gornjiCrossP()
+    gornjiCorneriP()
+    gornjiCorneriO()
+
+def daLiJeSlozena():
+    k1 = Kocka()
+    if k1.f == kocka.f and k1.l == kocka.l and k1.b == kocka.b and k1.r == kocka.r and k1.u == kocka.u and k1.d == kocka.d:
+        return True
+    return False
+
+def resenjeUJednojListi():
+    tmp = list()
+    for i in resenje:
+        for j in i:
+            tmp.append(j)
+    resenje = tmp
+def uprosti():
+    tmp = list
+    for i in range(1, len(resenje)):
+        if resenje[i - 1][0] == resenje[i][0]:
+            cnt = 0
+            while resenje[i - 1][0] == resenje[i][0]:
+                if len(resenje[i - 1]) == 1:
+                    cnt += 1
+                else:
+                    if resenje[i - 1][1] == "'":
+                        cnt -= 1
+                    else:
+                        cnt += 2
+                i += 1
+            if len(resenje[i - 1]) == 1:
+                    cnt += 1
+            else:
+                if resenje[i - 1][1] == "'":
+                    cnt -= 1
+                else:
+                    cnt += 2
+            cnt %= 4
+            if cnt == 1:
+                tmp.append(resenje[i - 1][0])
+            elif cnt == 2:
+                tmp.append(resenje[i - 1][0] + "2")
+            elif cnt == 3:
+                tmp.append(resenje[i - 1][0] + "'")
+            continue
+        tmp.append(resenje[i - 1])
+    return tmp
+# k = list(input().split(', '))
+# resenje = uprosti()
+# print(resenje[0])
+# test2Layers()
+test2LayersS(['U', 'U', 'D', 'R2', 'U', 'S', 'S2', "D'", "B'", 'R', 'U2', 'F', 'B'])
