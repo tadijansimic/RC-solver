@@ -1085,7 +1085,6 @@ def belaStrana():
     inputCorners()
     crvenoZelenoBeli()
     inputCorners()
-    print(corners[1])
     if kocka.d[2] != "W":
         uradiAlgoritam(["R", "U", "R'", "U'", "R", "U", "R'", "U'"])
         resenje.append(["R", "U", "R'", "U'", "R", "U", "R'", "U'"])
@@ -1572,17 +1571,20 @@ def daLiJeSlozena():
     return False
 
 def resenjeUJednojListi():
-    tmp = list()
+    tmp = []
     for i in resenje:
         for j in i:
             tmp.append(j)
-    resenje = tmp
+    return tmp
 def uprosti():
-    tmp = list
-    for i in range(1, len(resenje)):
+    tmp = list()
+    resenje.append("  ")
+    i = 1
+    while i < len(resenje):
         if resenje[i - 1][0] == resenje[i][0]:
+            inputCorners()
             cnt = 0
-            while resenje[i - 1][0] == resenje[i][0]:
+            while resenje[i - 1][0] == resenje[i][0] and i < len(resenje):
                 if len(resenje[i - 1]) == 1:
                     cnt += 1
                 else:
@@ -1592,24 +1594,36 @@ def uprosti():
                         cnt += 2
                 i += 1
             if len(resenje[i - 1]) == 1:
-                    cnt += 1
+                cnt += 1
             else:
                 if resenje[i - 1][1] == "'":
                     cnt -= 1
                 else:
                     cnt += 2
+            t = str(resenje[i - 1][0])
             cnt %= 4
             if cnt == 1:
-                tmp.append(resenje[i - 1][0])
+                tmp.append(t)
             elif cnt == 2:
-                tmp.append(resenje[i - 1][0] + "2")
+                t += "2"
+                tmp.append(t)
             elif cnt == 3:
-                tmp.append(resenje[i - 1][0] + "'")
-            continue
-        tmp.append(resenje[i - 1])
+                t += "'"
+                tmp.append(t)
+            
+        else:
+            t = resenje[i - 1]
+            tmp.append(t)
+        i += 1
     return tmp
-# k = list(input().split(', '))
-# resenje = uprosti()
-# print(resenje[0])
+
+scramble = list(map(str, input().split(" ")))
+uradiAlgoritam(scramble)
+slozi()
+resenje = resenjeUJednojListi()
+print(resenje)
+print(len(resenje), end="\n\n")
+resenje = uprosti()
+print(resenje)
+print(len(resenje))
 # test2Layers()
-test2LayersS(['U', 'U', 'D', 'R2', 'U', 'S', 'S2', "D'", "B'", 'R', 'U2', 'F', 'B'])
