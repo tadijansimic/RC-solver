@@ -11,15 +11,6 @@ class Kocka:
     u = ["Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y"]
     d = ["W", "W", "W", "W", "W", "W", "W", "W", "W"]
 
-#scramble = list(map(str, input().split(" ")))
-# class Kocka:
-#     f = ["O", "B", "W", "G", "G", "O", "R", "B", "Y"]
-#     r = ["G", "R", "G", "W", "O", "B", "O", "Y", "W"]
-#     b = ["W", "R", "W", "Y", "B", "W", "B", "R", "R"]
-#     l = ["B", "O", "Y", "R", "R", "W", "B", "O", "G"]
-#     u = ["O", "G", "O", "G", "Y", "B", "B", "O", "R"]
-#     d = ["Y", "W", "G", "Y", "W", "G", "Y", "Y", "R"]
-
 kocka = Kocka
 resenje = []
 
@@ -1121,7 +1112,7 @@ def belaStrana():
     uradiAlgoritam(["D"])
     resenje.append(["D"])
 
-def test2Layers():
+def test():
     potezi = ["R", "R'", "R2", "L", "L'", "L2", "U", "U'", "U2", "D", "D'", "D2", "F", "F'", "F2", "B", "B'", "B2", "M", "M2", "M'", "S", "S2", "S'", "E", "E'", "E2", "X", "Y", "Z"]
 
     tacnih = 0
@@ -1174,7 +1165,7 @@ def test2Layers():
     print("Pass: ", end="")
     print(tacnih, end=" / ")
     print(n)
-def test2LayersS(scramble):
+def testScr(scramble):
     print(scramble, end="\n\n")
     uradiAlgoritam(scramble)
     slozi()
@@ -1577,6 +1568,7 @@ def resenjeUJednojListi():
             tmp.append(j)
     return tmp
 def uprosti():
+    resenje = resenjeUJednojListi()
     tmp = list()
     resenje.append("  ")
     i = 1
@@ -1617,13 +1609,10 @@ def uprosti():
         i += 1
     return tmp
 
-scramble = list(map(str, input().split(" ")))
-uradiAlgoritam(scramble)
-slozi()
-resenje = resenjeUJednojListi()
-print(resenje)
-print(len(resenje), end="\n\n")
-resenje = uprosti()
-print(resenje)
-print(len(resenje))
-# test2Layers()
+test()
+
+# mainInput()
+# slozi()
+# resenje=uprosti()
+# print(resenje)
+# ispisiKocku()
